@@ -215,6 +215,21 @@
 
 ---
 
+## ✅ v5.2 — Q-BOT STUDIO Public Release *(18 October 2026)*
+
+- [x] **Studio packages**: FREE (1 bot for everyone), LITE $30, PRO $55, ELITE $80 per month; yearly $300 / $550 / $800; INFINITY Studio bot
+- [x] **9-step wizard** with a timezone step, review screen (DEPLOY / Back / CANCEL) and an animated ~4 s deploy
+- [x] Chart templates (3), Live Signal / Live Result templates (3 each), Future / AXTIRON / News template sections
+- [x] Buttons: BOLD / MONOSPACE font, premium emoji icons, **drag-and-drop home layout**
+- [x] **Strategy per bot**: main-bot analyzers, 10 pre-made, 7 styles, custom mix, 20-indicator builder with editable values, ELITE 2 named strategies
+- [x] Brokers per package, bot timezone, brand in the same font everywhere
+- [x] **STUDIO CONTROL** web app: Overview, Brand, Features, Strategy, Texts, Buttons
+- [x] FREE / INFINITY run cycles, rest notices, expiry reminders with RENEW
+- [x] Full isolation of each bot's users, licences, data and strategy
+- [x] Complete A → Z documentation: [STUDIO.md](STUDIO.md) · [guide/13-qbot-studio.md](guide/13-qbot-studio.md)
+
+---
+
 ## ✅ v5.0 — 3 Brokers + Q-BOT STUDIO + Strategy Intelligence + 24/7 Performance
 
 ### 🏦 Three Fully Supported Brokers
@@ -232,7 +247,7 @@
 - [x] Force channel join, open/licensed access mode
 - [x] Child Admin Panel (Telegram + web), analytics, My Bots management
 - [x] INFINITY: 1 bot with limited Studio features
-- [ ] **Separate Studio packages** and full public launch *(about 85% complete)*
+- [x] **Separate Studio packages** and full public launch — see **v5.2** above
 
 ### 📘 Documentation
 - [x] Complete step-by-step **User Guide** (13 chapters): every menu, step and button, with plan availability
@@ -311,6 +326,8 @@
 - [ ] Nested multi-level menu builder
 - [ ] Logo/banner upload & full theming
 - [ ] More Welcome / About / Help templates
+- [ ] More Future / AXTIRON / News templates
+- [ ] REFERRAL feature for Studio bots
 
 ### Free Bots Mission — Phase 2
 - [ ] Bot #6 release
@@ -363,6 +380,7 @@
 
 | Version | Highlights |
 |---|---|
+| **v5.2** | **Q-BOT STUDIO public release (18 Oct 2026)**: FREE / LITE / PRO / ELITE packages, 9-step wizard with animated deploy, per-bot strategies (pre-made, styles, custom, 20-indicator builder), chart / signal / result templates, drag-and-drop buttons, STUDIO CONTROL web app |
 | **v5.1** | Website [quantexbot.pro](https://quantexbot.pro) (3 languages, accounts, dashboard, AI support), Developer API with live signals + results, webhooks, SSE stream, future signal jobs, candles, checker, news; automatic USDT / Binance Pay billing; public status page; admin analytics |
 | **v5.0** | 3 brokers (BINOLLA added) + Primary Broker, Q-BOT STUDIO with templates, rebuilt Strategy Intelligence, Scanning Mode with accurate zones/trendlines, ~14× faster engine + 24/7 self-healing runtime, QUANTEX HUB, Live Chart, AXTIRON FS, AI Filter, Group Live Signal |
 | **v4.0** | Tradowix broker support, Auto Payment (Binance Pay/TRC20/BEP20), News Signal System (Forex Factory + AI), Live Checker (5th checker mode), Signal Tools (Formatter/Swap C/P/TZ Converter/Market Filters), new Future Signal modes (Live/Blackout/Whiteout FS), Bot Builder expanded (PLUS: 3 bots, INFINITY: 10 bots; Custom AI Prompt; Child Admin Panel; Session Log Viewer), Strategy Intelligence dashboard |

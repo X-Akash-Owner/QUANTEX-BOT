@@ -5,6 +5,8 @@
 ## Start here
 
 - [README.md](README.md): what QUANTEX is, features, brokers, plans, links
+- [STUDIO.md](STUDIO.md): Q-BOT STUDIO release notes (released 18 October 2026) — features, FREE / LITE $30 / PRO $55 / ELITE $80 packages, pricing
+- [guide/13-qbot-studio.md](guide/13-qbot-studio.md): Q-BOT STUDIO A → Z guide — 9-step wizard, every button, deploy, My Bots, Customize, Studio Control web app, strategies, child admin panel, run-time rules
 - [ARCHITECTURE.md](ARCHITECTURE.md): how the bot, the website, the Engine Bridge and the API fit together; how a signal reaches the API; request pipeline
 - [DEVELOPER_API.md](DEVELOPER_API.md): complete Developer API documentation — guide, every endpoint with parameters and example answers, error codes, plans
 - [api/openapi.json](api/openapi.json): OpenAPI 3.1 description of the API

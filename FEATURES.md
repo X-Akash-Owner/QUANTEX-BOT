@@ -393,56 +393,60 @@ Every signal includes a professional candlestick chart.
 
 ## 14. Q-BOT STUDIO — Build Your Own Bot
 
+> 🟢 **Released 18 October 2026 (v1.0).** Release notes: [STUDIO.md](STUDIO.md) · Complete A → Z manual: [guide/13-qbot-studio.md](guide/13-qbot-studio.md)
+
 **Build, brand and run your own Telegram signal bot, with no coding and no experience needed.** Your bot runs on the QUANTEX engine, so you need no server, hosting or technical setup.
 
-### Availability *(coming soon)*
-Q-BOT STUDIO is about **85% complete** and will be opened to the public soon with its **own separate Studio packages**. It is **not** included in the STARTER / PLUS / INFINITY Bot Access packages, except:
+### Packages
+| Package | Price | Bots | Brokers | Features | Strategy |
+|---|---|---|---|---|---|
+| 🆓 **FREE** | $0 | 1 | QUOTEX | 2 | Main bot (1 analyzer) · runs 7 days every 30 days, 4h on / 2h off |
+| 👑 **INFINITY** | Included with Bot Access INFINITY | 1 | QUOTEX | 9 | Main bot (1 analyzer) · 6h on / 2h off |
+| 🟢 **LITE** | $30 / month · $300 / year | 1 | QUOTEX | 14 | Main bot (2) + 10 pre-made |
+| 🔵 **PRO** | $55 / month · $550 / year | 3 | Any 2 | 19 | Main bot (3) + pre-made + 7 styles + custom mix |
+| 👑 **ELITE** | $80 / month · $800 / year | 5 | All 3 | 22 | Everything + 20-indicator builder + 2 named strategies |
 
-| Package | Q-BOT STUDIO access |
-|---|---|
-| 🆓 FREE | — |
-| 🟢 STARTER | — |
-| 💎 PLUS | — |
-| 👑 INFINITY | **1 bot, limited Studio features** |
-| 🛠 **Studio packages** *(coming soon)* | Full Studio: more bots and every Studio feature |
+FREE, INFINITY and LITE stay on TEMPLATE 01 for message and chart templates. PRO and ELITE unlock every template. Details: [PRICING.md](PRICING.md#-q-bot-studio-packages).
 
-### The 8-step creation wizard
+### The 9-step creation wizard
 | Step | What you do |
 |---|---|
-| **1 · Bot Token** | Create a bot with @BotFather (`/newbot`) and paste its token. It is verified instantly. |
-| **2 · Brand Name** | Choose the brand name shown across your bot |
-| **3 · Support Contact** | Set the Telegram account your users contact for help |
-| **4 · Welcome Template** | Pick one of **5 ready-made welcome templates** and preview it before applying |
-| **5 · About Template** | Pick one of **5 ready-made About templates** |
-| **6 · Help Template** | Pick one of **5 ready-made Help templates** |
-| **7 · Features** | Tick the features your users get. Each one becomes a menu button. |
-| **8 · Force Channel Join** | *(Optional)* Require users to join your channel first |
-| **Review & Deploy** | Check everything and tap **DEPLOY**. Your bot goes live immediately. |
+| **1 · Bot Token** | Create a bot with @BotFather (`/newbot`) and paste its token. It is checked privately and your message is deleted |
+| **2 · Brand Name** | The name shown across your bot (max 32), replacing QUANTEX in the same font |
+| **3 · Support Account** | Your `@username`, **USE MY PROFILE USERNAME** or **SKIP** |
+| **4 · Timezone** | The UTC offset every time in your bot uses |
+| **5 · Welcome** | One of **5 templates**, preview → **CONFIRM** |
+| **6 · About** | One of **5 templates**, preview → **CONFIRM** |
+| **7 · Help** | One of **5 templates**, preview → **CONFIRM** |
+| **8 · Features** | Tick the features that become menu buttons (6 groups, package-limited) |
+| **9 · Force Join** | **ENABLE** (your channel) or **SKIP** |
+| **Review** | **DEPLOY** · **Back** · **CANCEL**. A ~4-second animated deploy, then **YOUR BOT IS LIVE** |
 
-All templates automatically insert **your brand name** and use premium emojis.
-
-### Features you can give your bot (26)
-- **Core**: Start Live Session, Schedule Session, Settings
+### Features you can give your bot (22)
+- **Core**: Start Live Session, Schedule Session
 - **Checkers**: Live Checker, OTC Checker, Blackout Checker, Whiteout Checker
 - **Future Signals**: OTC Market FS, Live Market FS, Blackout FS, Whiteout FS, Future Live
 - **Signals**: Live Signal, Live Payouts, News Signal
 - **Tools**: Formatter, Market Filters, Swap C/P, TZ Converter
-- **User**: My Profile, Referral, Upgrade, About, Reviews, Others, Help
+- **User**: My Profile, About, Reviews, Help *(Referral coming soon)*
 
-### Customise everything after deployment (My Bots)
-- Add or remove features at any time
-- **Rename every button** and change its colour
-- Change the Welcome / About / Help templates, the support contact and the brand
-- Edit signal, result, partial, checker, profile and pricing titles
-- Signal templates and chart branding
-- Premium emoji on/off and a **custom AI prompt** for your bot's AI confirmation
-- Update the bot token, start, stop or delete the bot
+### Customise everything after deployment (MY BOTS → CUSTOMIZE)
+- Welcome / About / Help templates, support account, brand, timezone, brokers, force join
+- **Buttons**: name, colour, BOLD / MONOSPACE font, premium emoji icon, reset
+- **Chart templates** (CLASSIC QUANTUM · AI TERMINAL · PULSE PRO) with your watermark
+- **Live Signal / Live Result templates** (3 each, shared by Live Signal and Live Session)
+- **Future Signal, AXTIRON FS and News Signal** templates
+- **STUDIO CONTROL** web app: Overview, Brand, Features, **Strategy**, Texts, **Buttons** (drag-and-drop home layout)
+- Change token, start / stop, analytics, delete
+
+### Strategy per bot
+Main-bot analyzers (QUANTUM SCAN, SMART FOCUS, HYBRID ENGINE, Hybrid Engine V2 Astra, QUANTEX TURBO), 10 pre-made strategies, 7 trading styles, a custom 5-indicator mix and a **20-indicator builder with editable values** and an "at least N agree" rule. ELITE runs **two named strategies** at once. Each bot's strategy and cooldowns belong to that bot only.
 
 ### Run your bot like a business
-- **Child Admin Panel** (in Telegram and on the web): users, licences, bans, broadcasts with a notification template, logs and stats
+- **Admin panel** (`/admin` in your bot + Admin Web): users, licences (7 / 30 days / permanent), bans, broadcasts, stats, logs, usage reset and daily limits per tier
 - **Access mode**: *open* (anyone can use it) or *licensed* (only users you license)
 - **Analytics**: users, active today, actions and signals per bot
-- Your users get their own private sessions, favourites and settings inside your bot
+- **Full isolation**: your bot's users, licences, data and strategy are never mixed with the main bot or other bots
 
 ---
 
@@ -596,7 +600,7 @@ Subscribe to any plan **instantly and automatically**, directly inside the bot �
 | 🆓 FREE | $0 | Limited daily usage |
 | 🟢 STARTER | $18/month | Higher usage limits, Live Session & Schedule |
 | 💎 PLUS | $32/month | 10× usage, full template customization, Web Control |
-| 👑 INFINITY | $49/month | Unlimited usage, + 1 limited Q-BOT STUDIO bot |
+| 👑 INFINITY | $49/month | Unlimited usage, + 1 Q-BOT STUDIO bot (INFINITY Studio) |
 
 Subscriptions can be activated for any duration (custom days or permanent) at any tier — the tier determines *what* you can access, the duration determines *how long*.
 

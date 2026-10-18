@@ -143,21 +143,21 @@ Tap **📰 NEWS SIGNAL**, choose pairs (29 supported), an impact filter (High / 
 
 ---
 
-## Step 11 — Build Your Own Bot with Q-BOT STUDIO *(coming soon · INFINITY: 1 limited bot)*
+## Step 11 — Build Your Own Bot with Q-BOT STUDIO *(🟢 released 18 Oct 2026)*
 
-> Q-BOT STUDIO is about 85% complete and will be public soon with its own Studio packages. Right now INFINITY users can build **1 bot with limited Studio features**.
+> Every user gets **one FREE Studio bot**. For more bots, brokers, features and strategies choose **LITE $30**, **PRO $55** or **ELITE $80** per month (yearly $300 / $550 / $800).
 
 1. Create a bot with **@BotFather** (`/newbot`) and copy the token
 2. Tap **Q-BOT STUDIO → CREATE** and paste the token
-3. Set your **brand name** and **support contact**
-4. Choose a **Welcome**, an **About** and a **Help** template (5 ready-made designs each, with a preview)
+3. Set your **brand name**, **support account** and **timezone**
+4. Choose a **Welcome**, an **About** and a **Help** template (5 each, with a preview)
 5. Tick the **features** your bot should have
-6. *(Optional)* turn on **Force Channel Join**
-7. Review and tap **DEPLOY**. Your bot is live, with no coding and no server.
+6. **ENABLE** or **SKIP** Force Channel Join
+7. On the review screen tap **DEPLOY**. Your bot is live in about 4 seconds
 
-Manage it any time in **MY BOTS**: rename buttons, change colours, edit texts and templates, update the token, start/stop, and use the **Child Admin Panel** for your users.
+Manage it any time in **MY BOTS → CUSTOMIZE** or the **STUDIO CONTROL** web app (templates, buttons, layout, brokers, strategy), and run your users with `/admin` inside your bot.
 
-**Access:** separate Studio packages *(coming soon)* · INFINITY: 1 bot (limited) · STARTER / PLUS: not included
+📘 Complete guide: [guide/13-qbot-studio.md](guide/13-qbot-studio.md) · Packages: [PRICING.md](PRICING.md#-q-bot-studio-packages)
 
 ---
 

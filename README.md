@@ -41,6 +41,7 @@
 - [Pricing Plans](#-pricing-plans)
 - [Getting Started](#-getting-started)
 - [📘 User Guide (step by step)](USER_GUIDE.md)
+- [🤖 Q-BOT STUDIO (released 18 Oct 2026)](STUDIO.md)
 - [Documentation](#-documentation)
 - [Contact & Support](#-contact--support)
 
@@ -89,7 +90,7 @@ curl "https://api.quantexbot.pro/v1/signals/live?broker=quotex" -H "Authorizatio
 | 🏦 **3 brokers, fully supported** | **QUOTEX, TRADOWIX and BINOLLA** each have their own live feed, payouts and result checking. Set a **Primary Broker** once and every feature uses it automatically. → [Full market list](SUPPORTED_MARKETS.md) |
 | ⚡ **Super-fast performance** | The analysis engine was rebuilt and runs about **14× faster**. Taps on menu buttons get an instant response, screens open without waiting, and heavy work no longer slows anyone else down. |
 | 🛡 **24/7 stability** | Built to run non-stop for weeks. It recovers on its own if anything stalls, monitors itself and restarts automatically if the process ever stops. |
-| 🤖 **Q-BOT STUDIO** *(coming soon)* | Build your **own branded Telegram signal bot** in 8 guided steps, with **ready-made templates**, no coding needed. About 85% complete; separate Studio packages are coming. INFINITY already includes 1 limited Studio bot. |
+| 🤖 **Q-BOT STUDIO** 🟢 *released 18 Oct 2026* | Build your **own branded Telegram signal bot** in 9 guided steps and deploy it in seconds: templates, features, your own strategy, drag-and-drop buttons and your own admin panel. Packages: **FREE**, **LITE $30**, **PRO $55**, **ELITE $80**. → [STUDIO.md](STUDIO.md) |
 | 🧠 **Strategy Intelligence** | Learns from every settled result per market, timeframe and hour. It favours the setups and analyzers that actually win on each market and avoids weak ones, so accuracy keeps improving over time. |
 | 📡 **Scanning Mode** | A second signal engine next to Strategy Mode. It tracks supply/demand zones and trendlines on every market at once and shares signals instantly. |
 | 🌐 **QUANTEX HUB** | A built-in trading community: posts, comments, likes, direct messages, leaderboards, profiles and market news. |
@@ -116,7 +117,7 @@ Highlights:
 - ✅ **AI Filter**: filter any future-signal list with AI
 - ✅ **News Signal**: signals from the economic calendar, with AI direction analysis
 - ✅ **Signal Tools**: Formatter, TZ Converter, Market Filters, Live Payouts (Swap C/P coming soon)
-- 🛠 **Q-BOT STUDIO** *(coming soon, own packages)*: build your own bot from templates, no coding. INFINITY includes 1 limited bot
+- ✅ **Q-BOT STUDIO** *(released 18 Oct 2026)*: build your own branded bot in 9 steps, no coding. FREE / LITE / PRO / ELITE packages → [STUDIO.md](STUDIO.md)
 - ✅ **QUANTEX HUB**: community, messaging and news
 - ✅ **Live Chart** and **Web Control** dashboards inside Telegram
 - ✅ **Auto Payment**: Binance Pay, TRC20 and BEP20 USDT with instant activation
@@ -215,21 +216,22 @@ Signals from the economic calendar. AI decides the direction of each event, blen
 | **Market Filters** | Shows which OTC / Live markets are stable right now |
 | **Live Payouts** | Live payout % of every market of your broker |
 
-### 🤖 Q-BOT STUDIO: Build Your Own Bot *(no coding · coming soon)*
+### 🤖 Q-BOT STUDIO: Build Your Own Bot *(no coding · 🟢 released 18 Oct 2026)*
 
-> Q-BOT STUDIO is about 85% complete and will be public soon with its **own Studio packages**. It is not part of the STARTER / PLUS / INFINITY Bot Access packages, except that **INFINITY includes 1 Studio bot with limited features**.
+> Build your **own branded signal bot** in 9 guided steps and deploy it in about 4 seconds. Studio has its **own packages**: **FREE** (1 bot for everyone), **LITE $30**, **PRO $55** and **ELITE $80** per month (yearly $300 / $550 / $800). INFINITY Bot Access users also get 1 Studio bot. → [Release notes](STUDIO.md) · [Complete A → Z guide](guide/13-qbot-studio.md)
 
 | Feature | Description |
 |---|---|
-| **8-step guided wizard** | Bot token → brand name → support contact → **Welcome template** → **About template** → **Help template** → features → optional force-join channel → review → **Deploy** |
-| **Ready-made templates** | Choose from **5 professional templates** each for Welcome, About and Help, with a preview before you apply |
-| **Pick your features** | Tick any of 26 QUANTEX features (checkers, future signals, live signal, tools and more) to show in your bot |
-| **Full customisation** | Rename buttons, change their colours, edit signal / result / partial / checker titles, chart branding, premium emojis and a custom AI prompt |
-| **Instant deployment** | Runs on the QUANTEX engine, so you need no server and no hosting |
-| **My Bots** | Start, stop, edit, update the token or delete your bots at any time |
-| **Child Admin Panel** | Manage your bot's users: licences, bans, broadcasts, logs and stats. Choose **open** or **licensed** access. |
-| **Analytics** | Users, active users, actions and signals per bot |
-| **Access** | Separate Studio packages *(coming soon)* · INFINITY: **1 bot, limited** |
+| **9-step guided wizard** | Bot token → brand name → support → **timezone** → **Welcome** → **About** → **Help** → features → force join → review → **DEPLOY** (animated, ~4 s) |
+| **Ready-made templates** | 5 Welcome, 5 About and 5 Help templates; 3 chart templates; 3 Live Signal + 3 Live Result templates; Future / AXTIRON / News template sections |
+| **Pick your features** | Up to **22** QUANTEX features (Live Session, Schedule, checkers, future signals, Live Signal, payouts, news, tools…) as menu buttons |
+| **Your strategy** | Main-bot analyzers, 10 pre-made strategies, 7 trading styles, a custom indicator mix or a **20-indicator builder with editable values**; ELITE runs 2 named strategies at once |
+| **Full customisation** | Brand replaces QUANTEX in the same font; button names, colours, BOLD / MONOSPACE font, premium emoji icons; **drag-and-drop button layout**; chart watermark; brokers; timezone |
+| **STUDIO CONTROL web app** | Overview · Brand · Features · Strategy · Texts · Buttons, saved instantly |
+| **My Bots** | Start, stop, customise, change the token, view analytics or delete at any time |
+| **Your Admin Panel** | `/admin` in your bot + Admin Web: users, licences, bans, broadcasts, limits, logs and stats; **open** or **licensed** access |
+| **Isolation** | Each bot's users, licences, data and strategy are fully separate |
+| **Packages** | FREE · LITE · PRO · ELITE (+ INFINITY Studio bot) — [see pricing](PRICING.md#-q-bot-studio-packages) |
 
 ### 🌐 Web Apps (inside Telegram)
 | App | Description |
@@ -289,9 +291,20 @@ Signal loop
 | 🆓 **FREE** | $0 | Small daily signal allowance, checkers, tools, free bots |
 | 🟢 **STARTER** | **$18/month** | More daily signals, Live Session & Schedule |
 | 💎 **PLUS** ⭐ Most Popular | **$32/month** | Much higher limits, full template customisation, Web Control |
-| 👑 **INFINITY** | **$49/month** | Unlimited signals, everything in PLUS, + 1 limited Q-BOT STUDIO bot |
+| 👑 **INFINITY** | **$49/month** | Unlimited signals, everything in PLUS, + 1 Q-BOT STUDIO bot |
 
 > 🪄 Tap **Upgrade** in the bot for live pricing and subscribe instantly with **Auto Payment**. See [PRICING.md](PRICING.md) for full details.
+
+### 🤖 Q-BOT STUDIO packages *(released 18 Oct 2026)*
+
+| Package | Monthly | Yearly | Bots | Brokers | Features |
+|---|---|---|---|---|---|
+| 🆓 **FREE** | $0 | — | 1 | QUOTEX | 2 · runs 7 days every 30 days |
+| 🟢 **LITE** | **$30** | **$300** | 1 | QUOTEX | 14 |
+| 🔵 **PRO** | **$55** | **$550** | 3 | Any 2 | 19 |
+| 👑 **ELITE** | **$80** | **$800** | 5 | All 3 | All 22 + 20-indicator builder |
+
+> Buy in **Q-BOT STUDIO → SUBSCRIBE**. Full details: [STUDIO.md](STUDIO.md) · [PRICING.md](PRICING.md#-q-bot-studio-packages)
 
 ---
 
@@ -312,6 +325,8 @@ Full guide: [GETTING_STARTED.md](GETTING_STARTED.md)
 | File | Contents |
 |---|---|
 | [USER_GUIDE.md](USER_GUIDE.md) | 📘 **Complete step-by-step user manual**: every menu, step and button, with plan availability |
+| [STUDIO.md](STUDIO.md) | 🤖 **Q-BOT STUDIO release notes** (18 Oct 2026): all features, packages and pricing |
+| [guide/13-qbot-studio.md](guide/13-qbot-studio.md) | 🧙 **Q-BOT STUDIO A → Z guide**: every step, button, panel and package rule |
 | [FEATURES.md](FEATURES.md) | Complete feature documentation |
 | [SUPPORTED_MARKETS.md](SUPPORTED_MARKETS.md) | Every broker and every market, with counts |
 | [GETTING_STARTED.md](GETTING_STARTED.md) | Step-by-step user guide |

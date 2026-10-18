@@ -91,7 +91,7 @@ The main menu is your home screen. **BACK HOME** / **HOME** on any screen brings
 | **REVIEWS** | Rate the bot 1–5 stars | [11](11-account.md) |
 | **OTHERS** | Telegram Login, TG Status, Signal History | [11](11-account.md) |
 | **FREE BOTS** | 10 free bots (01–05 open) | [12](12-free-bots.md) |
-| **Q-BOT STUDIO** | Build and run your own branded bot *(coming soon; INFINITY: 1 limited bot)* | [13](13-qbot-studio.md) |
+| **Q-BOT STUDIO** | Build and run your own branded bot *(released 18 Oct 2026 · FREE / LITE / PRO / ELITE)* | [13](13-qbot-studio.md) |
 | **HELP** | A short how-to page inside the bot | [11](11-account.md) |
 
 > 🛠 Admins and sub-admins also see an **ADMIN PANEL** button. Normal users do not.

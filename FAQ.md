@@ -17,7 +17,7 @@ Yes. You must be a member of our **main channel** [t.me/bdtraderpro](https://t.m
 ### What's new in v5.0?
 - **3 fully supported brokers**: QUOTEX, TRADOWIX and BINOLLA (300+ markets), plus a **Primary Broker** setting
 - **Super-fast and stable**: the analysis engine is about 14× faster, buttons respond instantly, and the bot runs 24/7 with self-healing and automatic restart
-- **Q-BOT STUDIO** *(coming soon)*: build your own bot in 8 steps from ready-made templates, with no coding
+- **Q-BOT STUDIO** *(released 18 Oct 2026)*: build your own branded bot in 9 steps, with no coding — FREE / LITE / PRO / ELITE packages
 - **Strategy Intelligence (rebuilt)**: learns from every result and favours the analyzers and setups that win on each market
 - **Scanning Mode**: a new shared supply/demand zone and trendline engine, with accurate level drawing
 - **QUANTEX HUB** community, **Live Chart**, **AXTIRON FS**, **AI Filter** and **Group Live Signal** (for bot owners)
@@ -207,30 +207,34 @@ Inside QUANTEX-BOT → **Free Bots** menu → select any available bot. No separ
 ## 🤖 Q-BOT STUDIO (Build Your Own Bot)
 
 ### What is Q-BOT STUDIO?
-A no-code builder that lets you create **your own branded Telegram signal bot** powered by the QUANTEX engine. You need no coding, no experience and no server.
+A no-code builder that lets you create **your own branded Telegram signal bot** powered by the QUANTEX engine. You need no coding, no experience and no server. It was **released on 18 October 2026**. Release notes: [STUDIO.md](STUDIO.md) · Full guide: [guide/13-qbot-studio.md](guide/13-qbot-studio.md)
 
 ### How do I create a bot?
-An 8-step guided wizard: **Bot token** (from @BotFather) → **Brand name** → **Support contact** → **Welcome template** → **About template** → **Help template** → **Features** → optional **Force channel join**. Then review and tap **DEPLOY**. Your bot goes live instantly.
+**Q-BOT STUDIO → CREATE**, then 9 steps: **Bot token** (from @BotFather) → **Brand name** → **Support account** → **Timezone** → **Welcome template** → **About template** → **Help template** → **Features** → **Force join** (ENABLE / SKIP). The review screen has **DEPLOY**, **Back** and **CANCEL**. DEPLOY shows a ~4-second progress animation, then your bot is live.
 
 ### What are the templates?
-For the Welcome, About and Help screens you choose from **5 ready-made, professionally designed templates** each, with a preview before applying. Your brand name is inserted automatically and premium emojis are included.
+5 Welcome, 5 About and 5 Help templates (preview → confirm), 3 chart templates, 3 Live Signal and 3 Live Result templates, plus Future / AXTIRON / News template sections. Your brand name is inserted automatically. FREE, INFINITY and LITE stay on TEMPLATE 01 but can preview every template; PRO and ELITE can apply every template.
 
 ### What can I customise?
-Everything: which of the 26 features appear, every button's name and colour, the signal / result / partial / checker titles, chart branding, premium emojis, a custom AI prompt, the support contact and the force-join channel. Manage it all any time from **MY BOTS**.
+Features, brand, support, timezone, brokers, force join, button names / colours / font / premium emoji, the drag-and-drop button layout, the chart watermark, all templates and **your bot's strategy** (main-bot analyzers, pre-made, styles, custom mix or the 20-indicator builder, depending on the package). Use **MY BOTS → CUSTOMIZE** or the **STUDIO CONTROL** web app.
 
 ### Can I manage my bot's users?
-Yes. The **Child Admin Panel** (in Telegram and on the web) lets you manage users, licences, bans and broadcasts, view logs and stats, and choose **open** or **licensed** access.
+Yes. Send `/admin` in your bot to manage users, licences (7 / 30 days / permanent), bans, broadcasts, stats, logs, usage resets and **open** or **licensed** access. There is also the **Admin Web**. Your bot's users and data are completely separate from the main bot.
 
-### Is Q-BOT STUDIO included in my package?
-Not yet as a full product. STARTER, PLUS and INFINITY are **Bot Access** packages. Q-BOT STUDIO will get its **own separate Studio packages** soon (the Studio is about 85% complete). Until then:
+### How much does Q-BOT STUDIO cost?
 
-| Package | Q-BOT STUDIO access |
-|---|---|
-| 🆓 FREE | — |
-| 🟢 STARTER | — |
-| 💎 PLUS | — |
-| 👑 INFINITY | **1 bot, limited Studio features** |
-| 🛠 **Studio packages** *(coming soon)* | Full Studio: more bots and every Studio feature |
+| Package | Price | Bots | Brokers | Features |
+|---|---|---|---|---|
+| 🆓 FREE | $0 (runs 7 days every 30 days, 4h on / 2h off) | 1 | QUOTEX | 2 |
+| 👑 INFINITY | Included with Bot Access INFINITY (6h on / 2h off) | 1 | QUOTEX | 9 |
+| 🟢 LITE | $30 / month · $300 / year | 1 | QUOTEX | 14 |
+| 🔵 PRO | $55 / month · $550 / year | 3 | Any 2 | 19 |
+| 👑 ELITE | $80 / month · $800 / year | 5 | All 3 | 22 |
+
+Buy in **Q-BOT STUDIO → SUBSCRIBE** with Binance Pay or USDT (TRC20 / BEP20). It activates automatically. See [PRICING.md](PRICING.md#-q-bot-studio-packages).
+
+### Why did my Studio bot stop by itself?
+FREE and INFINITY bots take scheduled breaks (FREE 4h on / 2h off during its 7 days; INFINITY 6h on / 2h off) and start again automatically. Paid bots pause only if the package ends. You get a notice either way, plus one reminder 3 days before a paid package ends.
 
 ---
 

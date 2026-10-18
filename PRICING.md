@@ -14,11 +14,11 @@ QUANTEX-BOT uses simple monthly **Bot Access packages**. Pick the one that match
 | 🆓 **FREE** | $0 | Trying the bot out |
 | 🟢 **STARTER** | **$18 / month** | Casual users who want more daily signals |
 | 💎 **PLUS** ⭐ Most Popular | **$32 / month** | Regular traders who want the full toolkit, template editing and Web Control |
-| 👑 **INFINITY** | **$49 / month** | Power users who want unlimited usage (+ 1 limited Q-BOT STUDIO bot) |
+| 👑 **INFINITY** | **$49 / month** | Power users who want unlimited usage (+ 1 Q-BOT STUDIO bot) |
 
 > Tap **🪄 Upgrade** in the bot's main menu anytime to see live pricing, current plan status, and subscribe instantly via **Auto Payment** — or contact the owner for manual activation.
 
-> 🛠 **Q-BOT STUDIO is not part of the Bot Access packages.** STARTER, PLUS and INFINITY are **Bot Access** packages for using QUANTEX-BOT itself. Q-BOT STUDIO will have its **own separate Studio packages**, coming soon: the Studio is about 85% complete and will be opened to the public shortly. Until then, **INFINITY includes 1 Studio bot with limited Studio features**. Watch the main channel [t.me/bdtraderpro](https://t.me/bdtraderpro) for the launch.
+> 🤖 **Q-BOT STUDIO has its own packages** (FREE · LITE $30 · PRO $55 · ELITE $80 per month, yearly $300 / $550 / $800), released on **18 October 2026**. STARTER, PLUS and INFINITY are **Bot Access** packages; INFINITY also includes **1 Studio bot**. See [Q-BOT STUDIO Packages](#-q-bot-studio-packages).
 
 ---
 
@@ -29,7 +29,7 @@ QUANTEX-BOT uses simple monthly **Bot Access packages**. Pick the one that match
 | 🆓 FREE | 2 | 5 | — |
 | 🟢 STARTER | 3 | 25 | — |
 | 💎 PLUS | 10 | 60 | — |
-| 👑 INFINITY | **Unlimited** | **Unlimited** | 1 bot (limited) |
+| 👑 INFINITY | **Unlimited** | **Unlimited** | 1 INFINITY Studio bot |
 
 > Your remaining allowance is always shown live in **My Profile** and **Web Control**. Only signals actually delivered to you count. Limits may be adjusted by the admin. The bot always shows your current values.
 
@@ -70,32 +70,51 @@ QUANTEX-BOT uses simple monthly **Bot Access packages**. Pick the one that match
 ### 👑 INFINITY — $49/month
 - Everything in PLUS
 - **Unlimited daily usage** — no signal caps
-- **Q-BOT STUDIO — 1 bot with limited Studio features** (full Studio comes with the separate Studio packages)
+- **Q-BOT STUDIO — 1 INFINITY Studio bot** (9 features, 6h on / 2h off). More bots and features with the [Studio packages](#-q-bot-studio-packages)
 - Premium modules and highest performance
 - VIP support
 - All future premium features included automatically
 
 ---
 
-## 🤖 Q-BOT STUDIO — Separate Packages *(coming soon)*
+## 🤖 Q-BOT STUDIO Packages
 
-| Package | Q-BOT STUDIO access |
+> 🟢 **Released 18 October 2026.** Q-BOT STUDIO has its **own packages**, separate from the Bot Access plans above. Release notes: [STUDIO.md](STUDIO.md) · Complete guide: [guide/13-qbot-studio.md](guide/13-qbot-studio.md)
+
+| | 🆓 **FREE** | 👑 **INFINITY** | 🟢 **LITE** | 🔵 **PRO** | 👑 **ELITE** |
+|---|---|---|---|---|---|
+| **Monthly (30 days)** | $0 | Included with the Bot Access INFINITY plan | **$30** | **$55** | **$80** |
+| **Yearly (365 days)** | — | — | **$300** *(save $60)* | **$550** *(save $110)* | **$800** *(save $160)* |
+| **Bots** | 1 | 1 | 1 | 3 | 5 |
+| **Brokers** | QUOTEX | QUOTEX | QUOTEX | Any 2 of 3 | All 3 |
+| **Features** | 2 | 9 | 14 | 19 | **All 22** |
+| **Main-bot analyzers** | 1 | 1 | 2 | 3 | All 5 |
+| **Strategy sources** | Main bot | Main bot | + 10 pre-made | + 7 styles + custom 5-indicator mix | Everything + 20-indicator builder + 2 named strategies |
+| **Welcome / About / Help / Live Signal / Live Result / Chart templates** | TEMPLATE 01 | TEMPLATE 01 | TEMPLATE 01 | All | All |
+| **Future / AXTIRON / News templates** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Buttons, watermark, force join, support** | 🔒 | ✅ | ✅ | ✅ | ✅ |
+| **Admin panel** | Users, stats, logs · 30 signals / day shared | Full | Full | Full | Full |
+| **Run time** | 7 days every 30 days · 4h on / 2h off | 6h on / 2h off (18h / day) | 24/7 | 24/7 | 24/7 |
+
+### Features per package
+
+| Package | Features your bot can show |
 |---|---|
-| 🆓 FREE | — |
-| 🟢 STARTER | — |
-| 💎 PLUS | — |
-| 👑 INFINITY | **1 bot, limited Studio features** |
-| 🛠 **Studio packages** *(coming soon)* | Full Studio: more bots and every Studio feature |
+| 🆓 **FREE** | LIVE SIGNAL · OTC MARKET FS |
+| 👑 **INFINITY** | START LIVE SESSION · LIVE SIGNAL · OTC MARKET FS · LIVE CHECKER · OTC CHECKER · LIVE PAYOUTS · MY PROFILE · ABOUT · HELP |
+| 🟢 **LITE** | START LIVE SESSION · SCHEDULE SESSION · LIVE / OTC / BLACKOUT / WHITEOUT CHECKER · FORMATTER · MARKET FILTERS · SWAP C/P · TZ CONVERTER · MY PROFILE · ABOUT · REVIEWS · HELP |
+| 🔵 **PRO** | Everything in LITE **+** LIVE SIGNAL · LIVE PAYOUTS · NEWS SIGNAL · OTC MARKET FS · LIVE MARKET FS |
+| 👑 **ELITE** | Everything in PRO **+** BLACKOUT FS · WHITEOUT FS · FUTURE LIVE |
 
-> Q-BOT STUDIO lets you deploy branded signal bots with zero coding: ready-made Welcome / About / Help templates, your choice of features, renamed and recoloured buttons, one-tap deploy and a Child Admin Panel. The Studio is about **85% complete** and is not fully public yet. Dedicated **Studio packages** will be announced on the main channel [t.me/bdtraderpro](https://t.me/bdtraderpro).
+### How to buy
 
----|---|---|---|
-| 🆓 FREE | 0 | — | — |
-| 🟢 STARTER | 1 | ✅ | ✅ |
-| 💎 PLUS | **3** | ✅ | ✅ |
-| 👑 INFINITY | **10** | ✅ | ✅ |
+**Q-BOT STUDIO → SUBSCRIBE → LITE / PRO / ELITE → MONTHLY or YEARLY → BINANCE PAY · USDT TRC20 · USDT BEP20.**
 
-> Q-BOT STUDIO lets you deploy fully functional, branded signal bots with zero coding. Pick ready-made Welcome / About / Help templates, choose features, rename and recolour buttons, and deploy in one tap. Each bot has its own features, branding, templates, custom AI prompt and Child Admin Panel.
+- The order is valid for 1 hour. The package activates **automatically** once the payment is verified.
+- **Renewing** the same package adds the new days to your current expiry. **Switching** packages starts a new period today.
+- **3 days before expiry** you get one evening reminder with a **RENEW** button.
+- **FREE**: every user gets one FREE bot; deploying your first bot without a package starts it.
+- **INFINITY**: Bot Access INFINITY users get 1 Studio bot automatically.
 
 ---
 
