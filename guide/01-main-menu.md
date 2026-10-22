@@ -30,6 +30,7 @@ The main menu is your home screen. **BACK HOME** / **HOME** on any screen brings
 | **START LIVE SESSION** | Auto signals posted to your own channel/group at every candle | STARTER+ | [2](02-live-session.md) |
 | **SCHEDULE SESSION** | Run a Live Session automatically at set times and days | STARTER+ | [3](03-schedule-session.md) |
 | **SETTINGS** | Timezones, templates and broker preferences | All (editing templates: PLUS+) | [10](10-settings.md) |
+| **AUTO TRADING** | Trade the signals automatically on your own broker account | PLUS+ | [14](14-auto-trading.md) |
 
 ### Signal Checkers
 

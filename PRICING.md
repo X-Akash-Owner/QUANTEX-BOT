@@ -164,12 +164,12 @@ Special promo codes are occasionally released for:
 
 The **Developer API** ([DEVELOPER_API.md](DEVELOPER_API.md)) has its own plans, bought on the website in **[Dashboard → Upgrade plan](https://quantexbot.pro/dashboard/billing/upgrade)**. They are separate from the Bot Access packages above.
 
-| Plan | Price (USDT / month) | Requests / minute | Requests / month | API keys | Webhooks | Includes |
-|---|---|---|---|---|---|---|
-| **Developer** | Free | 10 | 3,000 | 1 | — | status, account, brokers, pairs, payouts, news |
-| **Starter** | 29 | 60 | 100,000 | 2 | — | + checker, **live signals & results** (polling), **future signals** |
-| **Pro** | 79 | 300 | 1,000,000 | 5 | 3 | + **candles** (30 days history), **webhooks**, **live stream** |
-| **Business** | 199 | 1,000 | 5,000,000 | 20 | 10 | + candles (365 days history) |
+| Plan | Price (USDT / 30 days) | Brokers | Requests | API keys | Includes |
+|---|---|---|---|---|---|
+| **Developer** | Free | all 3 | 10 / min · 3,000 / month | 1 | status, account, brokers, pairs, payouts |
+| **Candle Basic** | 15 | 1 of your choice | unlimited | 2 | + live **candles** M1–H4 (up to 2,000 per request) |
+| **Candle Data API** | 30 | 2 of your choice | unlimited | 3 | + live **candles** M1–H4 (up to 2,000 per request) |
+| **Full Market Data API** | 50 | all 3 | unlimited | 5 | + **historical candles** and **live ticks** (REST + stream) |
 
 - Pay with **Binance Pay**, **USDT TRC20** or **USDT BEP20**; the payment is verified automatically and the plan starts at once.
 - Current prices and limits are always on **[quantexbot.pro/pricing](https://quantexbot.pro/pricing)**.

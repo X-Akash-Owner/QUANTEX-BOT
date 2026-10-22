@@ -35,6 +35,7 @@
 26. [Performance & 24/7 Stability](#26-performance--247-stability)
 27. [Admin Control Panel](#27-admin-control-panel)
 28. [Database — PostgreSQL Backend](#28-database--postgresql-backend)
+29. [Auto Trading](#29-auto-trading--released-22-oct-2026)
 
 ---
 
@@ -716,6 +717,21 @@ All data is managed through a dedicated `db_postgres.py` module with connection 
 - Strategy Intelligence history and Scanning Mode signal statistics
 - QUANTEX HUB posts, comments, messages and news
 - Session log entries (per active session, in-memory)
+
+---
+
+## 29. Auto Trading 🟢 *released 22 Oct 2026*
+
+QUANTEX trades the signals for you on your **own broker account** — QUOTEX, TRADOWIX or BINOLLA — from the **AUTO TRADING** mini app in the bot (PLUS & INFINITY).
+
+- **Secure:** the broker password is used once to sign in and never stored; only an encrypted session is kept. Reconnects by itself.
+- **Signals:** Live Signal, Live Session and your own future lists (OTC, Live, Blackout, Whiteout), at the exact entry time, on the signal's own timeframe.
+- **Money management:** fixed stake or % of balance, martingale (1–3 steps, ×1.5–×3) or the **QUANTEX Recovery** plan with its sheet.
+- **Limits:** stop loss and take profit stop auto trading by themselves; signals per day; max trades at once.
+- **Precision:** safety margin (better entry than the open, also for MTG), payout filter, late martingale only at the open or a better price.
+- **Watch:** dashboard, terminal log, history with amount / payout / result, optional message per result.
+
+→ Full guide: [guide/14-auto-trading.md](guide/14-auto-trading.md)
 
 ---
 

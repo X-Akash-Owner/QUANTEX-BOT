@@ -309,6 +309,14 @@
 - [x] **Future signal lists** as async jobs (OTC, Live, Blackout, Whiteout)
 - [x] Usage and request logs in the dashboard; OpenAPI 3.1; documentation open to AI assistants (`/llms.txt`)
 
+### 🤖 Auto Trading — v5.3 *(22 Oct 2026)*
+- [x] AUTO TRADING mini app in the Telegram bot (PLUS & INFINITY): broker picker with logos, sign-in with the broker email (remembered per broker) and password
+- [x] QUOTEX, TRADOWIX and BINOLLA; password never stored, encrypted session; reconnects by itself in the background
+- [x] Live Signal, Live Session and own future lists (OTC, Live, Blackout, Whiteout) traded at the exact entry time
+- [x] Stake (USD / %), martingale, QUANTEX Recovery plan with money-management sheet
+- [x] Stop loss / take profit auto stop, safety margin (+ on MTG), payout filter, max trades at once, signals per day
+- [x] Dashboard, terminal log, history with amount / payout / result, Telegram notifications
+
 ### 🟢 System Status
 - [x] Health checks every minute (website, API, database, data engine, Telegram bot, payments)
 - [x] Public status page with 90-day uptime and incidents; `/v1/status` JSON
@@ -380,6 +388,7 @@
 
 | Version | Highlights |
 |---|---|
+| **v5.3** | **Auto Trading (22 Oct 2026)**: the bot trades the signals on the user's own QUOTEX / TRADOWIX / BINOLLA account — encrypted session (password never stored), martingale & QUANTEX Recovery, stop loss / take profit auto stop, safety margin, payout filter, max trades at once, log & history; HYBRID ENGINE V3 analyzer; Developer API focused on market data (candles, history, ticks; signal endpoints paused) |
 | **v5.2** | **Q-BOT STUDIO public release (18 Oct 2026)**: FREE / LITE / PRO / ELITE packages, 9-step wizard with animated deploy, per-bot strategies (pre-made, styles, custom, 20-indicator builder), chart / signal / result templates, drag-and-drop buttons, STUDIO CONTROL web app |
 | **v5.1** | Website [quantexbot.pro](https://quantexbot.pro) (3 languages, accounts, dashboard, AI support), Developer API with live signals + results, webhooks, SSE stream, future signal jobs, candles, checker, news; automatic USDT / Binance Pay billing; public status page; admin analytics |
 | **v5.0** | 3 brokers (BINOLLA added) + Primary Broker, Q-BOT STUDIO with templates, rebuilt Strategy Intelligence, Scanning Mode with accurate zones/trendlines, ~14× faster engine + 24/7 self-healing runtime, QUANTEX HUB, Live Chart, AXTIRON FS, AI Filter, Group Live Signal |

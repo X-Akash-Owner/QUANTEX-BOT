@@ -1,17 +1,18 @@
 # QUANTEX
 
-> QUANTEX is a binary options signal system: a Telegram bot (@QuantexBinaryTools_bot) with signal engines for QUOTEX, TRADOWIX and BINOLLA (OTC and Live markets), a website (https://quantexbot.pro) with accounts, documentation, billing and status, and a Developer API (https://api.quantexbot.pro/v1) that serves brokers, pairs, payouts, OHLC candles, the live signals the bot delivers and their results, future signal lists, a signal checker and the economic news calendar. JSON over HTTPS, key in "Authorization: Bearer qx_live_…". All documentation is public.
+> QUANTEX is a binary options signal system: a Telegram bot (@QuantexBinaryTools_bot) with signal engines for QUOTEX, TRADOWIX and BINOLLA (OTC and Live markets), a website (https://quantexbot.pro) with accounts, documentation, billing and status, Auto Trading in the bot (it trades the signals on the user's own QUOTEX, TRADOWIX or BINOLLA account with stop loss, take profit and money management), and a Developer API (https://api.quantexbot.pro/v1) for market data: brokers, pairs, payouts, OHLC candles, historical candles and live ticks. JSON over HTTPS, key in "Authorization: Bearer qx_live_…". All documentation is public.
 
 ## Start here
 
 - [README.md](README.md): what QUANTEX is, features, brokers, plans, links
+- [guide/14-auto-trading.md](guide/14-auto-trading.md): Auto Trading (released 22 October 2026) — broker sign-in (password never stored), dashboard, signal lists, money management (martingale, QUANTEX Recovery), stop loss / take profit auto stop, safety margin, payout filter, limits, log and history
 - [STUDIO.md](STUDIO.md): Q-BOT STUDIO release notes (released 18 October 2026) — features, FREE / LITE $30 / PRO $55 / ELITE $80 packages, pricing
 - [guide/13-qbot-studio.md](guide/13-qbot-studio.md): Q-BOT STUDIO A → Z guide — 9-step wizard, every button, deploy, My Bots, Customize, Studio Control web app, strategies, child admin panel, run-time rules
 - [ARCHITECTURE.md](ARCHITECTURE.md): how the bot, the website, the Engine Bridge and the API fit together; how a signal reaches the API; request pipeline
 - [DEVELOPER_API.md](DEVELOPER_API.md): complete Developer API documentation — guide, every endpoint with parameters and example answers, error codes, plans
 - [api/openapi.json](api/openapi.json): OpenAPI 3.1 description of the API
-- [WEBSITE.md](WEBSITE.md): the website quantexbot.pro — pages, accounts, dashboard, API keys, webhooks, billing, AI support, status
-- [examples/](examples/README.md): Python, Node.js, PHP and cURL examples (polling, webhooks with signature check, SSE stream, checker, future lists)
+- [WEBSITE.md](WEBSITE.md): the website quantexbot.pro — pages, accounts, dashboard, API keys, billing, AI support, status
+- [examples/](examples/README.md): Python, Node.js, PHP and cURL examples (live candle chart, historical candles to CSV)
 
 ## Live documentation (always current)
 
@@ -29,16 +30,10 @@
 - `GET /v1/pairs` — pairs of a broker: OTC/Live, category, open, payout
 - `GET /v1/payouts` — current payout % of every pair
 - `GET /v1/candles` — OHLC candles M1–H4 (closed candles only), activity volume, payout
-- `POST /v1/checker` — WIN / LOSS / NO_DATA of a signal list with martingale steps
-- `GET /v1/news` — economic events with bias, confidence and pairs to trade
-- `GET /v1/signals/live` — live signals and results; cursor polling with `since`
-- `GET /v1/signals/{id}` — one signal with its result
-- `GET /v1/results` — settled signals of a UTC day with win rate
-- `POST /v1/future` — start a future signal list (202 + job)
-- `GET /v1/jobs/{id}` — job state and the future list
-- `GET /v1/stream/signals` — Server-Sent Events stream of signal.created / signal.result
+- `GET /v1/history` — historical candles of a range of UTC days
+- `GET /v1/ticks` — latest tick of up to 20 pairs
+- `GET /v1/stream/ticks` — Server-Sent Events stream of live ticks
 - `GET /v1/openapi.json` — OpenAPI 3.1 (no key)
-- Webhooks — signal.created / signal.result POSTed to an HTTPS address, header `X-Quantex-Signature: t=<unix>,v1=<hex HMAC-SHA256 of "t.body">`
 
 ## Telegram bot
 

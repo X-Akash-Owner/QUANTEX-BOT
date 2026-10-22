@@ -1,1641 +1,1055 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "QUANTEX Developer API",
-    "version": "v1",
-    "description": "Market data, payouts, candles, live signals and results, future signal lists, the QUANTEX signal checker and economic news. Every answer uses the envelope {\"ok\", \"data\" | \"error\", \"meta\"}. Binary options trading carries high risk; data is analysis, not a guarantee.",
-    "contact": {
-      "url": "https://quantexbot.pro/contact"
-    }
-  },
-  "servers": [
-    {
-      "url": "https://api.quantexbot.pro"
-    }
-  ],
-  "paths": {
-    "/v1/status": {
-      "get": {
-        "operationId": "status",
-        "summary": "Status of the API, data feeds, Telegram bot and payments, and open incidents (the same as quantexbot.pro/status). status: operational, degraded, partial_outage, major_outage or maintenance; each component: operational, degraded, down or unknown. No key needed.",
-        "tags": [
-          "Public"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "status": "operational",
-                    "api_version": "v1",
-                    "server_time": "2026-10-05T10:00:00Z",
-                    "components": {
-                      "api": "operational",
-                      "market_data": "operational",
-                      "website": "operational",
-                      "telegram_bot": "operational",
-                      "payments": "operational"
-                    },
-                    "incidents": [],
-                    "page": "https://quantexbot.pro/status"
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/v1/account": {
-      "get": {
-        "operationId": "account",
-        "summary": "Your plan, its limits, what you used and the key in use.",
-        "tags": [
-          "Account & usage"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "plan": {
-                      "key": "starter",
-                      "name": "Starter",
-                      "expires_at": "2026-11-04T10:00:00Z"
-                    },
-                    "limits": {
-                      "requests_per_minute": 60,
-                      "requests_per_month": 100000,
-                      "api_keys": 2
-                    },
-                    "usage": {
-                      "month": 1520,
-                      "month_remaining": 98480,
-                      "resets_at": "2026-11-01T00:00:00Z"
-                    },
-                    "groups": [
-                      "markets",
-                      "payouts",
-                      "news",
-                      "account",
-                      "checker"
-                    ],
-                    "key": {
-                      "name": "My bot",
-                      "prefix": "Ab12Cd34",
-                      "scopes": [
-                        "markets:read",
-                        "checker:run"
-                      ]
-                    }
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "account:read",
-        "x-quantex-group": "account"
-      }
-    },
-    "/v1/usage": {
-      "get": {
-        "operationId": "usage",
-        "summary": "Requests per day and per endpoint.",
-        "tags": [
-          "Account & usage"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "days": [
-                      {
-                        "date": "2026-10-05",
-                        "requests": 320,
-                        "errors": 2
-                      }
-                    ],
-                    "endpoints": [
-                      {
-                        "endpoint": "pairs",
-                        "requests": 210,
-                        "errors": 0
-                      }
-                    ]
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "account:read",
-        "x-quantex-group": "account",
-        "parameters": [
-          {
-            "name": "days",
-            "in": "query",
-            "required": false,
-            "description": "Number of days, 1-90.",
-            "schema": {
-              "type": "integer",
-              "default": 30
-            }
-          }
-        ]
-      }
-    },
-    "/v1/brokers": {
-      "get": {
-        "operationId": "brokers",
-        "summary": "Supported brokers and whether their data feed is live.",
-        "tags": [
-          "Brokers & pairs"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": [
-                    {
-                      "id": "quotex",
-                      "name": "QUOTEX",
-                      "status": "operational",
-                      "pairs": 92,
-                      "open_pairs": 61,
-                      "markets": [
-                        "live",
-                        "otc"
-                      ],
-                      "updated_at": "2026-10-05T10:00:00Z"
-                    }
-                  ],
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "markets:read",
-        "x-quantex-group": "markets"
-      }
-    },
-    "/v1/pairs": {
-      "get": {
-        "operationId": "pairs",
-        "summary": "Pairs of a broker: OTC or Live, category, open now, current payout.",
-        "tags": [
-          "Brokers & pairs"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": [
-                    {
-                      "symbol": "EURUSD_otc",
-                      "name": "EUR/USD (OTC)",
-                      "market": "otc",
-                      "category": "currency",
-                      "open": true,
-                      "payout": 87,
-                      "updated_at": "2026-10-05T10:00:00Z"
-                    }
-                  ],
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "markets:read",
-        "x-quantex-group": "markets",
-        "parameters": [
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker: quotex, tradowix or binolla.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "quotex",
-                "tradowix",
-                "binolla"
-              ],
-              "default": "quotex"
-            }
-          },
-          {
-            "name": "market",
-            "in": "query",
-            "required": false,
-            "description": "otc, live or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "otc",
-                "live"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "open",
-            "in": "query",
-            "required": false,
-            "description": "true = only pairs that are open now.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ]
-      }
-    },
-    "/v1/payouts": {
-      "get": {
-        "operationId": "payouts",
-        "summary": "Current payout % of every pair, highest first.",
-        "tags": [
-          "Payouts"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": [
-                    {
-                      "symbol": "BTCUSD_otc",
-                      "name": "BTC/USD (OTC)",
-                      "market": "otc",
-                      "payout": 92,
-                      "open": true,
-                      "updated_at": "2026-10-05T10:00:00Z"
-                    }
-                  ],
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "payouts:read",
-        "x-quantex-group": "payouts",
-        "parameters": [
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker: quotex, tradowix or binolla.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "quotex",
-                "tradowix",
-                "binolla"
-              ],
-              "default": "quotex"
-            }
-          },
-          {
-            "name": "market",
-            "in": "query",
-            "required": false,
-            "description": "otc, live or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "otc",
-                "live"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "min",
-            "in": "query",
-            "required": false,
-            "description": "Only pairs paying at least this % (0-100).",
-            "schema": {
-              "type": "integer",
-              "default": 0
-            }
-          }
-        ]
-      }
-    },
-    "/v1/candles": {
-      "get": {
-        "operationId": "candles",
-        "summary": "OHLC candles (UTC), oldest first. M1 gives every stored minute (only closed minutes are stored). M5 and higher give only closed candles: the running candle is left out until its period has ended (at 12:23 the newest M5 candle is the one of 12:15; 12:20 arrives complete after 12:25). Without date: the most recent candles; with date: that UTC day (within your plan's history). Brokers give no real volume, so volume is an activity score: the candle's range (60 %) and body (40 %) against the average of the 20 candles before it, x100 (100 = normal, 0 when fewer than 20 earlier candles). payout = the broker's payout % when the candle opened.",
-        "tags": [
-          "Candles (OHLC)"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "broker": "quotex",
-                    "symbol": "EURUSD_otc",
-                    "timeframe": "M1",
-                    "candles": [
-                      {
-                        "time": "2026-10-05T07:27:00Z",
-                        "chart_open": true,
-                        "epoch": 1791185220,
-                        "open": 17800.91,
-                        "high": 17801.26,
-                        "low": 17799.7,
-                        "close": 17800.03,
-                        "payout": 89,
-                        "volume": 87
-                      },
-                      {
-                        "time": "2026-10-05T07:28:00Z",
-                        "chart_open": true,
-                        "epoch": 1791185280,
-                        "open": 17800.03,
-                        "high": 17800.08,
-                        "low": 17798.43,
-                        "close": 17798.6,
-                        "payout": 89,
-                        "volume": 124
-                      }
-                    ]
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "candles:read",
-        "x-quantex-group": "candles",
-        "parameters": [
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker: quotex, tradowix or binolla.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "quotex",
-                "tradowix",
-                "binolla"
-              ],
-              "default": "quotex"
-            }
-          },
-          {
-            "name": "pair",
-            "in": "query",
-            "required": true,
-            "description": "Pair symbol from /v1/pairs, e.g. EURUSD_otc.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "tf",
-            "in": "query",
-            "required": false,
-            "description": "Timeframe.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "M1",
-                "M5",
-                "M15",
-                "M30",
-                "H1",
-                "H4"
-              ],
-              "default": "M1"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "description": "Number of candles, 1-1000 (newest last).",
-            "schema": {
-              "type": "integer",
-              "default": 100
-            }
-          },
-          {
-            "name": "date",
-            "in": "query",
-            "required": false,
-            "description": "UTC day, YYYY-MM-DD.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/checker": {
-      "post": {
-        "operationId": "checker",
-        "summary": "Check a signal list: WIN / LOSS / NO_DATA for each signal, with martingale (MTG) steps.",
-        "tags": [
-          "Signal checker"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "broker": "quotex",
-                    "date": "2026-10-05",
-                    "timezone": 6,
-                    "mtg": 1,
-                    "results": [
-                      {
-                        "pair": "EURUSD_otc",
-                        "time": "14:05",
-                        "direction": "BUY",
-                        "timeframe": "M1",
-                        "result": "WIN",
-                        "mtg_level": 0,
-                        "payout": 87
-                      }
-                    ],
-                    "summary": {
-                      "total": 1,
-                      "wins": 1,
-                      "losses": 0,
-                      "no_data": 0,
-                      "win_rate": 100,
-                      "mtg_breakdown": [
-                        1,
-                        0
-                      ]
-                    },
-                    "rejected": []
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "x-quantex-scope": "checker:run",
-        "x-quantex-group": "checker",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "broker": {
-                    "type": "string",
-                    "description": "quotex, tradowix or binolla (default quotex)."
-                  },
-                  "signals": {
-                    "type": "array",
-                    "description": "Up to 200 objects: {\"pair\":\"EURUSD_otc\",\"time\":\"14:05\",\"direction\":\"BUY\",\"timeframe\":\"M1\"}. Direction BUY/CALL or PUT/SELL."
-                  },
-                  "text": {
-                    "type": "string",
-                    "description": "Or paste a list in the bot format, one per line: \"M1 EURUSD-OTC 14:05 CALL\"."
-                  },
-                  "mtg": {
-                    "type": "integer",
-                    "description": "Martingale steps 0-3 (default 1)."
-                  },
-                  "date": {
-                    "type": "string",
-                    "description": "today, yesterday or YYYY-MM-DD (last 30 days)."
-                  },
-                  "timezone": {
-                    "type": "number",
-                    "description": "UTC offset of the signal times in hours, e.g. 6 or -3 (default 6)."
-                  }
-                }
-              }
-            }
-          }
+    "openapi": "3.1.0",
+    "info": {
+        "title": "QUANTEX Developer API",
+        "version": "v1",
+        "description": "QUANTEX Developer API: Brokers & pairs, Payouts, Account & usage, Candles (OHLC), Historical candles, Live ticks. Every answer uses the envelope {\"ok\", \"data\" | \"error\", \"meta\"}. Binary options trading carries high risk; data is analysis, not a guarantee.",
+        "contact": {
+            "url": "https://quantexbot.pro/contact"
         }
-      }
     },
-    "/v1/news": {
-      "get": {
-        "operationId": "news",
-        "summary": "Upcoming economic events with the expected direction (bias) and the pairs to trade. The direction combines forecast vs previous, how the market reacted to past releases of the same event, the trend and AI; unclear news is skipped, and a currency / pair never gets two directions at the same minute. days=1 is the rest of today (in your timezone), 2 adds tomorrow, 3 the day after.",
-        "tags": [
-          "Economic news"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "events": [
-                      {
-                        "time": "2026-10-05T12:30:00Z",
-                        "currency": "USD",
-                        "impact": "high",
-                        "title": "CPI m/m",
-                        "forecast": "0.4%",
-                        "previous": "0.2%",
-                        "bias": "bullish",
-                        "confidence": 78,
-                        "bias_source": "analysis",
-                        "factors": {
-                          "fundamental": 0.66,
-                          "history": 0.6,
-                          "technical": 0.21
-                        },
-                        "pairs_up": [
-                          "USDJPY"
-                        ],
-                        "pairs_down": [
-                          "EURUSD"
-                        ]
-                      }
-                    ],
-                    "skipped": 1,
-                    "reason": null,
-                    "source": "ForexFactory economic calendar + QUANTEX analysis"
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "news:read",
-        "x-quantex-group": "news",
-        "parameters": [
-          {
-            "name": "days",
-            "in": "query",
-            "required": false,
-            "description": "1-3 days ahead.",
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
-          },
-          {
-            "name": "impact",
-            "in": "query",
-            "required": false,
-            "description": "high, medium, low or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "high",
-                "medium",
-                "low"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "currency",
-            "in": "query",
-            "required": false,
-            "description": "Comma-separated currencies, e.g. USD,EUR.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "timezone",
-            "in": "query",
-            "required": false,
-            "description": "UTC offset used for \"today\" (default 6).",
-            "schema": {
-              "type": "number",
-              "default": 6
-            }
-          }
-        ]
-      }
-    },
-    "/v1/signals/live": {
-      "get": {
-        "operationId": "signals_live",
-        "summary": "Live signals the QUANTEX bot delivered, and their results. active = signals waiting for entry or running. events = signal.created and signal.result, oldest first; ask again with since=next_cursor (every 2-5 s) to get only new events. Without since: the latest events. A signal has its entry and expiry time (UTC), so your own bot can post it at once; its result arrives later with the same id. result: WIN (mtg_level 0 = direct, 1 = after one martingale step), LOSS (also after one martingale step) or NO_DATA.",
-        "tags": [
-          "Live signals & results"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "active": [],
-                    "events": [
-                      {
-                        "cursor": 1042,
-                        "type": "signal.result",
-                        "created_at": "2026-10-05T10:32:09Z",
-                        "signal": {
-                          "id": "sig_3f9a1c0d2b7e4a6f8c11",
-                          "broker": "quotex",
-                          "pair": "EURUSD_otc",
-                          "market": "otc",
-                          "timeframe": "M1",
-                          "direction": "CALL",
-                          "entry_at": "2026-10-05T10:31:00Z",
-                          "expiry_at": "2026-10-05T10:32:00Z",
-                          "entry_epoch": 1791196260,
-                          "payout": 87,
-                          "confidence": 82,
-                          "engine": "hybrid",
-                          "status": "settled",
-                          "result": "WIN",
-                          "mtg_level": 0,
-                          "result_at": "2026-10-05T10:32:09Z"
+    "servers": [
+        {
+            "url": "https://api.quantexbot.pro"
+        }
+    ],
+    "paths": {
+        "/v1/status": {
+            "get": {
+                "operationId": "status",
+                "summary": "Status of the API, data feeds, Telegram bot and payments, and open incidents (the same as quantexbot.pro/status). status: operational, degraded, partial_outage, major_outage or maintenance; each component: operational, degraded, down or unknown. No key needed.",
+                "tags": [
+                    "Public"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "status": "operational",
+                                        "api_version": "v1",
+                                        "server_time": "2026-10-05T10:00:00Z",
+                                        "components": {
+                                            "api": "operational",
+                                            "market_data": "operational",
+                                            "website": "operational",
+                                            "telegram_bot": "operational",
+                                            "payments": "operational"
+                                        },
+                                        "incidents": [],
+                                        "page": "https://quantexbot.pro/status"
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
                         }
-                      }
-                    ],
-                    "next_cursor": 1042
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "signals:read",
-        "x-quantex-group": "signals",
-        "parameters": [
-          {
-            "name": "since",
-            "in": "query",
-            "required": false,
-            "description": "Cursor from next_cursor of the last answer.",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "description": "Events per answer, 1-500.",
-            "schema": {
-              "type": "integer",
-              "default": 100
-            }
-          },
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker(s), comma-separated: quotex, tradowix, binolla. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "market",
-            "in": "query",
-            "required": false,
-            "description": "otc, live or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "otc",
-                "live"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "tf",
-            "in": "query",
-            "required": false,
-            "description": "Timeframe(s), comma-separated, e.g. M1,M5. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pair",
-            "in": "query",
-            "required": false,
-            "description": "Pair(s), comma-separated, e.g. EURUSD_otc. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/signals/{id}": {
-      "get": {
-        "operationId": "signal",
-        "summary": "One signal by id, with its result when it is known (status pending, running or settled).",
-        "tags": [
-          "Live signals & results"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "id": "sig_3f9a1c0d2b7e4a6f8c11",
-                    "broker": "quotex",
-                    "pair": "EURUSD_otc",
-                    "market": "otc",
-                    "timeframe": "M1",
-                    "direction": "CALL",
-                    "entry_at": "2026-10-05T10:31:00Z",
-                    "expiry_at": "2026-10-05T10:32:00Z",
-                    "entry_epoch": 1791196260,
-                    "payout": 87,
-                    "confidence": 82,
-                    "engine": "hybrid",
-                    "status": "settled",
-                    "result": "WIN",
-                    "mtg_level": 0,
-                    "result_at": "2026-10-05T10:32:09Z"
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "signals:read",
-        "x-quantex-group": "signals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Signal id (sig_…).",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/results": {
-      "get": {
-        "operationId": "results",
-        "summary": "Settled signals of one UTC day with a summary: wins, mtg_wins (won after one martingale step), losses, win_rate (with one martingale step) and win_rate_no_mtg. Up to 30 days back.",
-        "tags": [
-          "Live signals & results"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "date": "2026-10-05",
-                    "summary": {
-                      "total": 48,
-                      "wins": 33,
-                      "mtg_wins": 9,
-                      "losses": 5,
-                      "no_data": 1,
-                      "win_rate": 89.36,
-                      "win_rate_no_mtg": 70.21
                     },
-                    "results": [
-                      {
-                        "id": "sig_3f9a1c0d2b7e4a6f8c11",
-                        "broker": "quotex",
-                        "pair": "EURUSD_otc",
-                        "market": "otc",
-                        "timeframe": "M1",
-                        "direction": "CALL",
-                        "entry_at": "2026-10-05T10:31:00Z",
-                        "expiry_at": "2026-10-05T10:32:00Z",
-                        "entry_epoch": 1791196260,
-                        "payout": 87,
-                        "confidence": 82,
-                        "engine": "hybrid",
-                        "status": "settled",
-                        "result": "WIN",
-                        "mtg_level": 0,
-                        "result_at": "2026-10-05T10:32:09Z"
-                      }
-                    ]
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "signals:read",
-        "x-quantex-group": "signals",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "query",
-            "required": false,
-            "description": "UTC day, YYYY-MM-DD (default today).",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "description": "Signals in the list, 1-1000.",
-            "schema": {
-              "type": "integer",
-              "default": 500
-            }
-          },
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker(s), comma-separated: quotex, tradowix, binolla. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "market",
-            "in": "query",
-            "required": false,
-            "description": "otc, live or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "otc",
-                "live"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "tf",
-            "in": "query",
-            "required": false,
-            "description": "Timeframe(s), comma-separated, e.g. M1,M5. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pair",
-            "in": "query",
-            "required": false,
-            "description": "Pair(s), comma-separated, e.g. EURUSD_otc. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/future": {
-      "post": {
-        "operationId": "future",
-        "summary": "Make a future signal list with the QUANTEX future generators (the same as the bot's Future Signal). Answers 202 with a job at once; the list is usually ready in a few seconds: GET /v1/jobs/{id}. Times are in the timezone you send.",
-        "tags": [
-          "Future signals"
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted (runs in the background)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "id": "9d2c4b1e-7a3f-4c58-9e0a-2b6d8f1c3a47",
-                    "type": "future",
-                    "status": "queued",
-                    "created_at": "2026-10-05T10:00:00Z",
-                    "finished_at": null,
-                    "params": {
-                      "mode": "otc",
-                      "broker": "quotex",
-                      "start": "18:00",
-                      "end": "22:00",
-                      "timezone": 6,
-                      "system": 1,
-                      "strategy": 1,
-                      "quantity": 2,
-                      "pairs": []
-                    },
-                    "poll": "https://api.quantexbot.pro/v1/jobs/9d2c4b1e-7a3f-4c58-9e0a-2b6d8f1c3a47"
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "x-quantex-scope": "future:generate",
-        "x-quantex-group": "future",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "mode": {
-                    "type": "string",
-                    "description": "otc (default), live, blackout or whiteout (blackout / whiteout give times without a direction)."
-                  },
-                  "broker": {
-                    "type": "string",
-                    "description": "quotex (default), tradowix or binolla."
-                  },
-                  "start": {
-                    "type": "string",
-                    "description": "From HH:MM (default 00:00), in your timezone."
-                  },
-                  "end": {
-                    "type": "string",
-                    "description": "To HH:MM (default 23:59), in your timezone."
-                  },
-                  "timezone": {
-                    "type": "number",
-                    "description": "UTC offset in hours, e.g. 6 or -3 (default 6)."
-                  },
-                  "system": {
-                    "type": "integer",
-                    "description": "Gap between signals: 1 = LITE (2 min), 2 = PRO (5 min), 3 = ULTRA (7 min), 4 = HYBRID (2/5/7)."
-                  },
-                  "strategy": {
-                    "type": "integer",
-                    "description": "1 PRECISION (up trends, CALL), 2 COUNTER (down trends, PUT), 3 DYNAMIC, 4 ADAPTIVE (mixed)."
-                  },
-                  "quantity": {
-                    "type": "integer",
-                    "description": "Maximum signals: 1 = 15, 2 = 30 (default), 3 = all."
-                  },
-                  "pairs": {
-                    "type": "array",
-                    "description": "Pairs to use, e.g. [\"EURUSD_otc\",\"USDJPY_otc\"]. Empty = every open pair."
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/jobs/{id}": {
-      "get": {
-        "operationId": "job",
-        "summary": "State of a future list job: queued, running, done (result.signals) or failed (error). Jobs are kept 7 days.",
-        "tags": [
-          "Future signals"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                },
-                "example": {
-                  "ok": true,
-                  "data": {
-                    "id": "9d2c4b1e-7a3f-4c58-9e0a-2b6d8f1c3a47",
-                    "type": "future",
-                    "status": "done",
-                    "created_at": "2026-10-05T10:00:00Z",
-                    "finished_at": "2026-10-05T10:00:04Z",
-                    "params": {
-                      "mode": "otc",
-                      "timezone": 6
-                    },
-                    "result": {
-                      "mode": "otc",
-                      "broker": "quotex",
-                      "timezone": 6,
-                      "date": "2026-10-05",
-                      "timeframe": "M1",
-                      "system": "Q-BOT LITE",
-                      "strategy": "PRECISION",
-                      "pairs_scanned": 41,
-                      "reason": null,
-                      "signals": [
-                        {
-                          "pair": "EURUSD_otc",
-                          "time": "18:05",
-                          "time_utc": "2026-10-05T12:05:00Z",
-                          "direction": "CALL"
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
                         }
-                      ]
                     }
-                  },
-                  "meta": {
-                    "request_id": "req_01J…"
-                  }
-                }
-              }
+                },
+                "security": []
             }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
         },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "future:generate",
-        "x-quantex-group": "future",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Job id from POST /v1/future.",
-            "schema": {
-              "type": "string"
+        "/v1/account": {
+            "get": {
+                "operationId": "account",
+                "summary": "Your plan, its limits, what you used and the key in use.",
+                "tags": [
+                    "Account & usage"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "plan": {
+                                            "key": "market_data",
+                                            "name": "Market Data",
+                                            "expires_at": "2026-11-04T10:00:00Z"
+                                        },
+                                        "limits": {
+                                            "requests_per_minute": 60,
+                                            "requests_per_month": 100000,
+                                            "api_keys": 2
+                                        },
+                                        "usage": {
+                                            "month": 1520,
+                                            "month_remaining": 98480,
+                                            "resets_at": "2026-11-01T00:00:00Z"
+                                        },
+                                        "groups": [
+                                            "markets",
+                                            "payouts",
+                                            "account",
+                                            "candles",
+                                            "history",
+                                            "ticks"
+                                        ],
+                                        "key": {
+                                            "name": "My bot",
+                                            "prefix": "Ab12Cd34",
+                                            "scopes": [
+                                                "markets:read",
+                                                "candles:read"
+                                            ]
+                                        }
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "account:read",
+                "x-quantex-group": "account"
             }
-          }
-        ]
-      }
-    },
-    "/v1/stream/signals": {
-      "get": {
-        "operationId": "stream",
-        "summary": "Server-Sent Events: every new signal.created / signal.result the moment it arrives (id = cursor). The stream closes after 5 minutes with event \"reconnect\"; reconnect with the Last-Event-ID header (EventSource does this by itself) so nothing is missed. At most 2 open streams per account.",
-        "tags": [
-          "Signal stream (SSE)"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/event-stream": {
-                "schema": {
-                  "type": "string",
-                  "description": "Server-Sent Events: id = cursor, event = signal.created | signal.result, data = the event as JSON."
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
         },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "apiKeyQuery": []
-          }
-        ],
-        "x-quantex-scope": "signals:read",
-        "x-quantex-group": "stream",
-        "parameters": [
-          {
-            "name": "since",
-            "in": "query",
-            "required": false,
-            "description": "Start after this cursor (default: only new events).",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "broker",
-            "in": "query",
-            "required": false,
-            "description": "Broker(s), comma-separated: quotex, tradowix, binolla. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "market",
-            "in": "query",
-            "required": false,
-            "description": "otc, live or all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "otc",
-                "live"
-              ],
-              "default": "all"
-            }
-          },
-          {
-            "name": "tf",
-            "in": "query",
-            "required": false,
-            "description": "Timeframe(s), comma-separated, e.g. M1,M5. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pair",
-            "in": "query",
-            "required": false,
-            "description": "Pair(s), comma-separated, e.g. EURUSD_otc. Empty = all.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/openapi.json": {
-      "get": {
-        "operationId": "openapi",
-        "summary": "This API described as an OpenAPI 3.1 file. No key needed.",
-        "tags": [
-          "Public"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error (see the error codes)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "apiKey": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "qx_live_<prefix>_<secret>",
-        "description": "Create keys in the dashboard (API keys). Send: Authorization: Bearer qx_live_…"
-      },
-      "apiKeyQuery": {
-        "type": "apiKey",
-        "in": "query",
-        "name": "api_key",
-        "description": "For testing in a browser address bar (GET only). The key ends up in browser history and server logs — use a separate key with few permissions."
-      }
-    },
-    "schemas": {
-      "Success": {
-        "type": "object",
-        "required": [
-          "ok",
-          "data",
-          "meta"
-        ],
-        "properties": {
-          "ok": {
-            "const": true
-          },
-          "data": [],
-          "meta": {
-            "$ref": "#/components/schemas/Meta"
-          }
-        }
-      },
-      "Error": {
-        "type": "object",
-        "required": [
-          "ok",
-          "error",
-          "meta"
-        ],
-        "properties": {
-          "ok": {
-            "const": false
-          },
-          "error": {
-            "type": "object",
-            "required": [
-              "code",
-              "message"
-            ],
-            "properties": {
-              "code": {
-                "type": "string",
-                "enum": [
-                  "unauthenticated",
-                  "invalid_api_key",
-                  "key_revoked",
-                  "key_expired",
-                  "account_suspended",
-                  "ip_not_allowed",
-                  "insufficient_scope",
-                  "plan_upgrade_required",
-                  "history_limit",
-                  "not_found",
-                  "pair_not_found",
-                  "signal_not_found",
-                  "job_not_found",
-                  "method_not_allowed",
-                  "payload_too_large",
-                  "validation_failed",
-                  "rate_limited",
-                  "quota_exceeded",
-                  "too_many_jobs",
-                  "too_many_streams",
-                  "internal_error",
-                  "service_unavailable",
-                  "busy"
+        "/v1/usage": {
+            "get": {
+                "operationId": "usage",
+                "summary": "Requests per day and per endpoint.",
+                "tags": [
+                    "Account & usage"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "days": [
+                                            {
+                                                "date": "2026-10-05",
+                                                "requests": 320,
+                                                "errors": 2
+                                            }
+                                        ],
+                                        "endpoints": [
+                                            {
+                                                "endpoint": "pairs",
+                                                "requests": 210,
+                                                "errors": 0
+                                            }
+                                        ]
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "account:read",
+                "x-quantex-group": "account",
+                "parameters": [
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "required": false,
+                        "description": "Number of days, 1-90.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 30
+                        }
+                    }
                 ]
-              },
-              "message": {
-                "type": "string"
-              },
-              "fields": {
-                "type": "object",
-                "description": "validation_failed: parameter => messages"
-              }
             }
-          },
-          "meta": {
-            "$ref": "#/components/schemas/Meta"
-          }
+        },
+        "/v1/brokers": {
+            "get": {
+                "operationId": "brokers",
+                "summary": "Supported brokers and whether their data feed is live.",
+                "tags": [
+                    "Brokers & pairs"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": [
+                                        {
+                                            "id": "quotex",
+                                            "name": "QUOTEX",
+                                            "status": "operational",
+                                            "pairs": 92,
+                                            "open_pairs": 61,
+                                            "markets": [
+                                                "live",
+                                                "otc"
+                                            ],
+                                            "updated_at": "2026-10-05T10:00:00Z"
+                                        }
+                                    ],
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "markets:read",
+                "x-quantex-group": "markets"
+            }
+        },
+        "/v1/pairs": {
+            "get": {
+                "operationId": "pairs",
+                "summary": "Pairs of a broker: OTC or Live, category, open now, current payout.",
+                "tags": [
+                    "Brokers & pairs"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": [
+                                        {
+                                            "symbol": "EURUSD_otc",
+                                            "name": "EUR/USD (OTC)",
+                                            "market": "otc",
+                                            "category": "currency",
+                                            "open": true,
+                                            "payout": 87,
+                                            "updated_at": "2026-10-05T10:00:00Z"
+                                        }
+                                    ],
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "markets:read",
+                "x-quantex-group": "markets",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex, tradowix or binolla (the ones your plan covers: Candle Basic 1, Candle Data 2, Full Market Data all 3; otherwise error broker_not_in_plan).",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix",
+                                "binolla"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "market",
+                        "in": "query",
+                        "required": false,
+                        "description": "otc, live or all.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "all",
+                                "otc",
+                                "live"
+                            ],
+                            "default": "all"
+                        }
+                    },
+                    {
+                        "name": "open",
+                        "in": "query",
+                        "required": false,
+                        "description": "true = only pairs that are open now.",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/payouts": {
+            "get": {
+                "operationId": "payouts",
+                "summary": "Current payout % of every pair, highest first.",
+                "tags": [
+                    "Payouts"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": [
+                                        {
+                                            "symbol": "BTCUSD_otc",
+                                            "name": "BTC/USD (OTC)",
+                                            "market": "otc",
+                                            "payout": 92,
+                                            "open": true,
+                                            "updated_at": "2026-10-05T10:00:00Z"
+                                        }
+                                    ],
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "payouts:read",
+                "x-quantex-group": "payouts",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex, tradowix or binolla (the ones your plan covers: Candle Basic 1, Candle Data 2, Full Market Data all 3; otherwise error broker_not_in_plan).",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix",
+                                "binolla"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "market",
+                        "in": "query",
+                        "required": false,
+                        "description": "otc, live or all.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "all",
+                                "otc",
+                                "live"
+                            ],
+                            "default": "all"
+                        }
+                    },
+                    {
+                        "name": "min",
+                        "in": "query",
+                        "required": false,
+                        "description": "Only pairs paying at least this % (0-100).",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/candles": {
+            "get": {
+                "operationId": "candles",
+                "summary": "OHLC candles (UTC), oldest first. M1 gives every stored minute (only closed minutes are stored). M5 and higher give only closed candles: the running candle is left out until its period has ended (at 12:23 the newest M5 candle is the one of 12:15; 12:20 arrives complete after 12:25). Without date: the most recent candles; with date: that UTC day (within your plan's history). Brokers give no real volume, so volume is an activity score: the candle's range (60 %) and body (40 %) against the average of the 20 candles before it, x100 (100 = normal, 0 when fewer than 20 earlier candles). payout = the broker's payout % when the candle opened.",
+                "tags": [
+                    "Candles (OHLC)"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "broker": "quotex",
+                                        "symbol": "EURUSD_otc",
+                                        "timeframe": "M1",
+                                        "candles": [
+                                            {
+                                                "time": "2026-10-05T07:27:00Z",
+                                                "chart_open": true,
+                                                "epoch": 1791185220,
+                                                "open": 17800.91,
+                                                "high": 17801.26,
+                                                "low": 17799.7,
+                                                "close": 17800.03,
+                                                "payout": 89,
+                                                "volume": 87
+                                            },
+                                            {
+                                                "time": "2026-10-05T07:28:00Z",
+                                                "chart_open": true,
+                                                "epoch": 1791185280,
+                                                "open": 17800.03,
+                                                "high": 17800.08,
+                                                "low": 17798.43,
+                                                "close": 17798.6,
+                                                "payout": 89,
+                                                "volume": 124
+                                            }
+                                        ]
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "candles:read",
+                "x-quantex-group": "candles",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex, tradowix or binolla (the ones your plan covers: Candle Basic 1, Candle Data 2, Full Market Data all 3; otherwise error broker_not_in_plan).",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix",
+                                "binolla"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "pair",
+                        "in": "query",
+                        "required": true,
+                        "description": "Pair symbol from /v1/pairs, e.g. EURUSD_otc.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tf",
+                        "in": "query",
+                        "required": false,
+                        "description": "Timeframe.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "M1",
+                                "M5",
+                                "M15",
+                                "M30",
+                                "H1",
+                                "H4"
+                            ],
+                            "default": "M1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "description": "Number of candles (newest last). Without date: 1-2000 (Market Data plans; 1-1000 on other plans), default 100. With date: 1-1440, default the whole day (M1: 1440 candles).",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": false,
+                        "description": "UTC day, YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/history": {
+            "get": {
+                "operationId": "history",
+                "summary": "Historical OHLC candles (UTC) of a range of days, oldest first, straight from the QUANTEX servers: every closed candle of every day, the same data the QUANTEX checker uses. M1: up to 7 days per request (10 080 candles); M5 and higher: up to 31 days. Same fields as /v1/candles. How far back you may ask depends on your plan (error history_limit).",
+                "tags": [
+                    "Historical candles"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "broker": "quotex",
+                                        "symbol": "EURUSD_otc",
+                                        "timeframe": "M1",
+                                        "from": "2026-10-03",
+                                        "to": "2026-10-04",
+                                        "count": 2880,
+                                        "candles": [
+                                            {
+                                                "time": "2026-10-03T00:00:00Z",
+                                                "chart_open": true,
+                                                "epoch": 1790985600,
+                                                "open": 1.16782,
+                                                "high": 1.16801,
+                                                "low": 1.16775,
+                                                "close": 1.16796,
+                                                "payout": 88,
+                                                "volume": 0
+                                            }
+                                        ]
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "history:read",
+                "x-quantex-group": "history",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex, tradowix or binolla (the ones your plan covers: Candle Basic 1, Candle Data 2, Full Market Data all 3; otherwise error broker_not_in_plan).",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix",
+                                "binolla"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "pair",
+                        "in": "query",
+                        "required": true,
+                        "description": "Pair symbol from /v1/pairs, e.g. EURUSD_otc.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tf",
+                        "in": "query",
+                        "required": false,
+                        "description": "Timeframe.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "M1",
+                                "M5",
+                                "M15",
+                                "M30",
+                                "H1",
+                                "H4"
+                            ],
+                            "default": "M1"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": true,
+                        "description": "First UTC day, YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "description": "Last UTC day, YYYY-MM-DD (default: the same as from).",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/ticks": {
+            "get": {
+                "operationId": "ticks",
+                "summary": "The newest live tick of up to 20 pairs (QUOTEX and TRADOWIX; BINOLLA has no tick feed): price, bid, ask and the exact time in milliseconds (UTC), plus the broker's running M1 candle (open, high, low, close = price, seconds_left). Put it on top of /v1/candles and your chart moves exactly like the broker's. fresh=false: no new tick for 2 minutes (market closed or paused). available=false: no tick for this pair right now. For a moving chart use the tick stream (/v1/stream/ticks) instead of asking again and again.",
+                "tags": [
+                    "Live ticks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "example": {
+                                    "ok": true,
+                                    "data": {
+                                        "broker": "quotex",
+                                        "server_time": "2026-10-05T10:31:24.512Z",
+                                        "ticks": [
+                                            {
+                                                "symbol": "EURUSD_otc",
+                                                "available": true,
+                                                "price": 1.16834,
+                                                "bid": 1.16831,
+                                                "ask": 1.16837,
+                                                "time": "2026-10-05T10:31:24.318Z",
+                                                "epoch_ms": 1791196284318,
+                                                "fresh": true,
+                                                "candle": {
+                                                    "timeframe": "M1",
+                                                    "time": "2026-10-05T10:31:00Z",
+                                                    "epoch": 1791196260,
+                                                    "open": 1.16812,
+                                                    "high": 1.1684,
+                                                    "low": 1.16809,
+                                                    "close": 1.16834,
+                                                    "seconds_left": 36
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "meta": {
+                                        "request_id": "req_01J…"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "ticks:read",
+                "x-quantex-group": "ticks",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex or tradowix.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "pairs",
+                        "in": "query",
+                        "required": true,
+                        "description": "Up to 20 pair symbols, comma-separated, e.g. EURUSD_otc,BTCUSD_otc.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/stream/ticks": {
+            "get": {
+                "operationId": "tick_stream",
+                "summary": "Server-Sent Events: a \"tick\" event (same object as in /v1/ticks) every time the price of one of your pairs changes, checked about 4 times a second. When a minute closes the next tick carries the new candle, so a chart fed by this stream draws every candle like the broker. The stream closes after 5 minutes with event \"reconnect\"; open it again (EventSource does this by itself). At most 2 open streams per account.",
+                "tags": [
+                    "Live ticks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/event-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "Server-Sent Events: event = tick, data = one tick as JSON (see /v1/ticks)."
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiKey": []
+                    },
+                    {
+                        "apiKeyQuery": []
+                    }
+                ],
+                "x-quantex-scope": "ticks:read",
+                "x-quantex-group": "ticks",
+                "parameters": [
+                    {
+                        "name": "broker",
+                        "in": "query",
+                        "required": false,
+                        "description": "Broker: quotex or tradowix.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quotex",
+                                "tradowix"
+                            ],
+                            "default": "quotex"
+                        }
+                    },
+                    {
+                        "name": "pairs",
+                        "in": "query",
+                        "required": true,
+                        "description": "Up to 20 pair symbols, comma-separated.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/v1/openapi.json": {
+            "get": {
+                "operationId": "openapi",
+                "summary": "This API described as an OpenAPI 3.1 file. No key needed.",
+                "tags": [
+                    "Public"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error (see the error codes)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
         }
-      },
-      "Meta": {
-        "type": "object",
-        "properties": {
-          "request_id": {
-            "type": "string"
-          }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "qx_live_<prefix>_<secret>",
+                "description": "Create keys in the dashboard (API keys). Send: Authorization: Bearer qx_live_…"
+            },
+            "apiKeyQuery": {
+                "type": "apiKey",
+                "in": "query",
+                "name": "api_key",
+                "description": "For testing in a browser address bar (GET only). The key ends up in browser history and server logs — use a separate key with few permissions."
+            }
+        },
+        "schemas": {
+            "Success": {
+                "type": "object",
+                "required": [
+                    "ok",
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "ok": {
+                        "const": true
+                    },
+                    "data": [],
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "required": [
+                    "ok",
+                    "error",
+                    "meta"
+                ],
+                "properties": {
+                    "ok": {
+                        "const": false
+                    },
+                    "error": {
+                        "type": "object",
+                        "required": [
+                            "code",
+                            "message"
+                        ],
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "enum": [
+                                    "unauthenticated",
+                                    "invalid_api_key",
+                                    "key_revoked",
+                                    "key_expired",
+                                    "account_suspended",
+                                    "ip_not_allowed",
+                                    "insufficient_scope",
+                                    "plan_upgrade_required",
+                                    "history_limit",
+                                    "broker_not_in_plan",
+                                    "ticks_not_supported",
+                                    "range_too_large",
+                                    "not_found",
+                                    "endpoint_unavailable",
+                                    "pair_not_found",
+                                    "method_not_allowed",
+                                    "payload_too_large",
+                                    "validation_failed",
+                                    "rate_limited",
+                                    "quota_exceeded",
+                                    "too_many_streams",
+                                    "internal_error",
+                                    "service_unavailable",
+                                    "busy"
+                                ]
+                            },
+                            "message": {
+                                "type": "string"
+                            },
+                            "fields": {
+                                "type": "object",
+                                "description": "validation_failed: parameter => messages"
+                            }
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                }
+            },
+            "Meta": {
+                "type": "object",
+                "properties": {
+                    "request_id": {
+                        "type": "string"
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

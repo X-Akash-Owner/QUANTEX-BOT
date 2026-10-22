@@ -1,44 +1,34 @@
 # cURL — one request per endpoint
 
+Replace `qx_live_YOUR_KEY` with your key. Every answer is `{"ok", "data" | "error", "meta"}`.
+
 ```bash
-export QX="Authorization: Bearer $QUANTEX_API_KEY"
-API=https://api.quantexbot.pro/v1
+KEY="qx_live_YOUR_KEY"
+API="https://api.quantexbot.pro/v1"
 
-# Public (no key)
+# Status (no key)
 curl "$API/status"
+
+# Your plan, limits and usage
+curl "$API/account" -H "Authorization: Bearer $KEY"
+curl "$API/usage?days=7" -H "Authorization: Bearer $KEY"
+
+# Brokers, pairs and payouts
+curl "$API/brokers" -H "Authorization: Bearer $KEY"
+curl "$API/pairs?broker=quotex&market=otc&open=true" -H "Authorization: Bearer $KEY"
+curl "$API/payouts?broker=quotex&market=otc&min=85" -H "Authorization: Bearer $KEY"
+
+# Candles: the latest 100 M1 candles, or a whole UTC day (1440 M1 candles)
+curl "$API/candles?broker=quotex&pair=EURUSD_otc&tf=M1&limit=100" -H "Authorization: Bearer $KEY"
+curl "$API/candles?broker=quotex&pair=EURUSD_otc&tf=M1&date=2026-10-20" -H "Authorization: Bearer $KEY"
+
+# Historical candles of a range of days (Full Market Data API)
+curl "$API/history?broker=quotex&pair=EURUSD_otc&tf=M5&from=2026-10-01&to=2026-10-07" -H "Authorization: Bearer $KEY"
+
+# Live ticks (Full Market Data API; QUOTEX and TRADOWIX)
+curl "$API/ticks?broker=quotex&pairs=EURUSD_otc,BTCUSD_otc" -H "Authorization: Bearer $KEY"
+curl -N "$API/stream/ticks?broker=quotex&pairs=EURUSD_otc" -H "Authorization: Bearer $KEY"
+
+# OpenAPI 3.1 (no key)
 curl "$API/openapi.json"
-
-# Account
-curl -H "$QX" "$API/account"
-curl -H "$QX" "$API/usage?days=7"
-
-# Markets
-curl -H "$QX" "$API/brokers"
-curl -H "$QX" "$API/pairs?broker=quotex&market=otc&open=true"
-curl -H "$QX" "$API/payouts?broker=tradowix&min=85"
-curl -H "$QX" "$API/candles?broker=quotex&pair=EURUSD_otc&tf=M5&limit=50"
-
-# Checker
-curl -X POST -H "$QX" -H "Content-Type: application/json" "$API/checker" \
-  -d '{"broker":"quotex","mtg":1,"date":"today","timezone":6,"signals":[{"pair":"EURUSD_otc","time":"14:05","direction":"CALL","timeframe":"M1"}]}'
-
-# News
-curl -H "$QX" "$API/news?days=1&impact=high"
-
-# Live signals and results
-curl -H "$QX" "$API/signals/live?broker=quotex"            # latest events + next_cursor
-curl -H "$QX" "$API/signals/live?since=1042"               # only what is new after cursor 1042
-curl -H "$QX" "$API/signals/sig_3f9a1c0d2b7e4a6f8c11"
-curl -H "$QX" "$API/results?date=2026-10-05&broker=quotex"
-
-# Future list (async)
-curl -X POST -H "$QX" -H "Content-Type: application/json" "$API/future" \
-  -d '{"mode":"otc","start":"18:00","end":"22:00","timezone":6,"system":1,"strategy":1,"quantity":2}'
-curl -H "$QX" "$API/jobs/<job id from the answer>"
-
-# Stream (Server-Sent Events) — keep the connection open
-curl -N -H "$QX" "$API/stream/signals?broker=quotex"
 ```
-
-In a browser address bar (GET only, for quick tests): add `api_key=qx_live_…` to the address, e.g.
-`https://api.quantexbot.pro/v1/pairs?broker=quotex&api_key=qx_live_YOUR_KEY`. Use a separate test key with few permissions.

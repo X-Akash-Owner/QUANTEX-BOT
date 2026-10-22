@@ -38,7 +38,7 @@ The **Telegram bot** ([@QuantexBinaryTools_bot](https://t.me/QuantexBinaryTools_
 | **Information** | Features, supported brokers and markets, how Live Session / Future Signal / the checkers work, pricing, FAQ, rules, updates |
 | **Documentation** | The complete user guide and the Developer API documentation |
 | **Account** | Sign up with email or Google, two-step verification, sessions, notifications, profile photo |
-| **Developer API** | API keys, webhooks, usage, request logs, plan limits |
+| **Developer API** | API keys, usage, request logs, plan limits (market data: candles, history, ticks) |
 | **Billing** | Buy and renew Developer API plans with Binance Pay or USDT (TRC20 / BEP20), receipts |
 | **Support** | QUANTEX AI assistant (24/7), contact form, Telegram support |
 | **Status** | Live health of the website, API, data feeds, Telegram bot and payments |
@@ -88,7 +88,7 @@ All page texts are written in the admin panel (Markdown editor with drafts, prev
 - **Two-step verification** (authenticator app) with recovery codes.
 - **Sessions** page: see every signed-in device and sign the others out.
 - **Password reset** by email; leaked-password check; sign-in rate limits and Cloudflare Turnstile against bots.
-- **Notifications** in the dashboard and by email (payments, plan expiry, security events, webhooks).
+- **Notifications** in the dashboard and by email (payments, plan expiry, security events).
 - **Telegram link**: connect your Telegram account so payment and plan news also reach you in the bot.
 - **Account deletion** on request, with a grace period.
 
@@ -102,7 +102,7 @@ All page texts are written in the admin panel (Markdown editor with drafts, prev
 |---|---|
 | **Overview** | Plan, API activity, quick actions |
 | **Account** | Profile (photo, name, language, timezone) · Security (password, two-step, sessions) · Notifications · Account settings |
-| **API** | API overview · My APIs (which endpoint groups your plan opens) · API keys · **Webhooks** · API usage · API logs · API documentation |
+| **API** | API overview · My APIs (which endpoint groups your plan opens) · API keys · API usage · API logs · API documentation |
 | **Billing** | Current plan · Upgrade plan · Payment history (with receipts) · Subscription status |
 
 ---
@@ -114,7 +114,6 @@ Full documentation: **[DEVELOPER_API.md](DEVELOPER_API.md)** (also at [quantexbo
 | Dashboard page | What you do there |
 |---|---|
 | **API keys** | Create keys (shown once), choose permissions (scopes), optional IP allow-list and expiry, rotate the secret, revoke |
-| **Webhooks** | Add your HTTPS address, choose events and filters (broker, market, timeframe), see the signing secret once, **Send test**, see recent deliveries |
 | **API usage** | Requests per day and per endpoint, monthly quota |
 | **API logs** | Every request of the last 90 days (time, endpoint, status, latency, request ID) — request bodies and keys are never stored |
 | **My APIs** | Which endpoint groups your plan includes, and from which plan the others are available |
@@ -123,7 +122,7 @@ Full documentation: **[DEVELOPER_API.md](DEVELOPER_API.md)** (also at [quantexbo
 
 ## 💳 Buying an API plan
 
-1. **Dashboard → Upgrade plan** → choose Starter, Pro or Business.
+1. **Dashboard → Upgrade plan** → choose Candle Basic, Candle Data API or Full Market Data API (and your broker(s) for the first two).
 2. Choose **Binance Pay**, **USDT TRC20** or **USDT BEP20**. The order shows the exact amount (with a small unique fraction), the Pay ID or wallet address and a QR code; it is valid for 60 minutes.
 3. Pay, then paste the **transaction ID**.
 4. The payment is **verified automatically** against Binance / the blockchain (receiver, currency, exact amount, time, confirmations; a transaction can be used only once). The plan starts at once, limits apply immediately and a receipt is emailed.

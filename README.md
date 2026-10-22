@@ -24,7 +24,7 @@
 
 > **QUANTEX-BOT** is a professional binary options signal system that runs entirely inside Telegram. It supports **three brokers — QUOTEX, TRADOWIX and BINOLLA — with 300+ markets**. Signals come from two engines, **Strategy Mode** and **Scanning Mode**, and a **Strategy Intelligence** layer learns from every real result. Around the signals you get a complete checker suite, Future Signal generators, the **Q-BOT STUDIO** no-code bot builder, the **QUANTEX HUB** community, a **Live Chart**, a Web Control dashboard and instant Auto Payment.
 
-> 🌐 **Website:** [quantexbot.pro](https://quantexbot.pro) — documentation, accounts, the **Developer API**, payments and live system status. · 🔌 **Developer API:** [`https://api.quantexbot.pro/v1`](https://quantexbot.pro/docs/api) — live signals, results, candles, payouts, checker, future signals and news for your own apps and bots.
+> 🌐 **Website:** [quantexbot.pro](https://quantexbot.pro) — documentation, accounts, the **Developer API**, payments and live system status. · 🔌 **Developer API:** [`https://api.quantexbot.pro/v1`](https://quantexbot.pro/docs/api) — brokers, pairs, payouts, candles, historical candles and live ticks for your own apps and bots.
 
 ---
 
@@ -32,6 +32,7 @@
 
 ## 📌 Table of Contents
 
+- [🤖 New: Auto Trading](#-new-auto-trading)
 - [🌐 New: Website & Developer API](#-new-website--developer-api)
 - [What's New in v5.0](#-whats-new-in-v50)
 - [What is QUANTEX-BOT?](#-what-is-quantex-bot)
@@ -47,20 +48,39 @@
 
 ---
 
+## 🤖 New: Auto Trading
+
+**QUANTEX is now an auto trading bot** *(released 22 Oct 2026)*. Tap **AUTO TRADING** in the bot, sign in to your own broker account, and every signal you choose is traded for you at the exact entry time.
+
+| | |
+|---|---|
+| 🔐 **Secure broker connection** | QUOTEX, TRADOWIX and BINOLLA. Your password is never stored — only an encrypted session; reconnects by itself |
+| 💰 **Money management** | Fixed stake or % of balance, martingale (steps × multiplier) or the **QUANTEX Recovery** plan |
+| 🛑 **Stop loss & take profit** | Reached → auto trading stops by itself and tells you |
+| 🎯 **Precision** | Orders reach the broker as the candle opens; safety margin, payout filter, max trades at once, daily limit |
+| 📡 **Signal sources** | Live Signal, Live Session and your own future signal lists (OTC, Live, Blackout, Whiteout) |
+| 📊 **Dashboard, Log & History** | Live result, terminal log, every trade with amount, payout and result |
+
+**Why auto trading?** No emotions: no chasing losses, no doubling out of fear, no stopping too late. Choose good signals, set your limits, and just watch. → **[Auto Trading guide](guide/14-auto-trading.md)** · available for **PLUS** and **INFINITY**.
+
+> Trading involves risk. Auto Trading follows your settings; it does not guarantee profit. Start on a demo account.
+
+---
+
 ## 🌐 New: Website & Developer API
 
-QUANTEX now has its own website and a public **Developer API**.
+QUANTEX now has its own website and a public **Developer API** for market data.
 
 | | Link | What it is |
 |---|---|---|
 | 🌐 **Website** | [quantexbot.pro](https://quantexbot.pro) · [বাংলা](https://quantexbot.pro/bn) · [Português](https://quantexbot.pro/pt) | Features, documentation, pricing, updates, FAQ, contact; sign up with email or Google |
-| 👤 **Dashboard** | [quantexbot.pro/dashboard](https://quantexbot.pro/dashboard) | Profile, two-step security, notifications, API keys, webhooks, usage, logs, billing |
-| 🔌 **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | REST API: brokers, pairs, payouts, candles, **live signals + results**, **future signals**, checker, news; **webhooks** and a **live stream** |
+| 👤 **Dashboard** | [quantexbot.pro/dashboard](https://quantexbot.pro/dashboard) | Profile, two-step security, notifications, API keys, usage, logs, billing |
+| 🔌 **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | Market data API: brokers, pairs, payouts, **candles M1–H4**, **historical candles** and **live ticks** (REST + stream) |
 | 📘 **API documentation** | [quantexbot.pro/docs/api](https://quantexbot.pro/docs/api) · [DEVELOPER_API.md](DEVELOPER_API.md) | Every endpoint, parameter, example and error code |
 | 🧾 **OpenAPI** | [api.quantexbot.pro/v1/openapi.json](https://api.quantexbot.pro/v1/openapi.json) · [api/openapi.json](api/openapi.json) | Machine-readable description for code generators, Postman and AI agents |
 | 🤖 **For AI assistants** | [quantexbot.pro/llms.txt](https://quantexbot.pro/llms.txt) · [llms.txt](llms.txt) | The whole documentation as plain text, open to everyone |
 | 🟢 **System status** | [quantexbot.pro/status](https://quantexbot.pro/status) | Website, API, data engine, Telegram bot and payments, checked every minute |
-| 💳 **API plans** | [quantexbot.pro/pricing](https://quantexbot.pro/pricing) | Developer (free), Starter, Pro, Business — paid with Binance Pay or USDT, verified automatically |
+| 💳 **API plans** | [quantexbot.pro/pricing](https://quantexbot.pro/pricing) | Developer (free), Candle Basic $15, Candle Data API $30, Full Market Data API $50 — paid with Binance Pay or USDT, verified automatically |
 | 🤖 **QUANTEX AI** | on every page | 24/7 support assistant in English, বাংলা and Português |
 
 **Developer API in one minute**
@@ -70,8 +90,8 @@ QUANTEX now has its own website and a public **Developer API**.
 # 2. Ask for the open OTC pairs of QUOTEX:
 curl "https://api.quantexbot.pro/v1/pairs?broker=quotex&market=otc&open=true" \
   -H "Authorization: Bearer qx_live_YOUR_KEY"
-# 3. Get the live signals the bot delivers, and their results (poll with ?since=<next_cursor>):
-curl "https://api.quantexbot.pro/v1/signals/live?broker=quotex" -H "Authorization: Bearer qx_live_YOUR_KEY"
+# 3. Get the latest M1 candles of a pair:
+curl "https://api.quantexbot.pro/v1/candles?broker=quotex&pair=EURUSD_otc&tf=M1&limit=100" -H "Authorization: Bearer qx_live_YOUR_KEY"
 ```
 
 | Read more | |
@@ -117,6 +137,7 @@ Highlights:
 - ✅ **AI Filter**: filter any future-signal list with AI
 - ✅ **News Signal**: signals from the economic calendar, with AI direction analysis
 - ✅ **Signal Tools**: Formatter, TZ Converter, Market Filters, Live Payouts (Swap C/P coming soon)
+- ✅ **Auto Trading** *(released 22 Oct 2026)*: the bot trades the signals on your own QUOTEX, TRADOWIX or BINOLLA account — stop loss / take profit auto stop, martingale or QUANTEX Recovery, safety margin, payout filter → [guide](guide/14-auto-trading.md)
 - ✅ **Q-BOT STUDIO** *(released 18 Oct 2026)*: build your own branded bot in 9 steps, no coding. FREE / LITE / PRO / ELITE packages → [STUDIO.md](STUDIO.md)
 - ✅ **QUANTEX HUB**: community, messaging and news
 - ✅ **Live Chart** and **Web Control** dashboards inside Telegram
@@ -335,8 +356,9 @@ Full guide: [GETTING_STARTED.md](GETTING_STARTED.md)
 | [FAQ.md](FAQ.md) | Frequently asked questions |
 | [ROADMAP.md](ROADMAP.md) | Version history and what's next |
 | [WEBSITE.md](WEBSITE.md) | 🌐 The website [quantexbot.pro](https://quantexbot.pro): pages, accounts, dashboard, billing, AI support, status |
-| [DEVELOPER_API.md](DEVELOPER_API.md) | 🔌 **Developer API**: authentication, keys, limits, every endpoint with examples, webhooks, stream, errors, plans |
+| [DEVELOPER_API.md](DEVELOPER_API.md) | 🔌 **Developer API**: authentication, keys, limits, every endpoint with examples, tick stream, errors, plans |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | 🧩 System architecture: bot, collectors, Engine Bridge, website, API; how a live signal reaches the API |
+| [guide/14-auto-trading.md](guide/14-auto-trading.md) | 🤖 **Auto Trading**: connect your broker, settings, money management, stop loss / take profit |
 | [examples/](examples/) | 🧪 Code examples (Python, Node.js, PHP, cURL) |
 | [api/openapi.json](api/openapi.json) | 🧾 OpenAPI 3.1 file of the API |
 | [llms.txt](llms.txt) | 🤖 Index of this documentation for AI assistants |

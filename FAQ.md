@@ -375,16 +375,19 @@ Binary options trading carries high risk. QUANTEX-BOT provides signals to assist
 Yes: **[quantexbot.pro](https://quantexbot.pro)** (also in [বাংলা](https://quantexbot.pro/bn) and [Português](https://quantexbot.pro/pt)). It has the documentation, pricing, updates, FAQ, a contact form, the live [system status](https://quantexbot.pro/status) and your account dashboard. Signals and trading tools stay in the Telegram bot. Details: [WEBSITE.md](WEBSITE.md).
 
 ### What is the Developer API?
-A REST API at `https://api.quantexbot.pro/v1` for your own apps and bots: brokers, pairs, payouts, candles, the **live signals the bot delivers and their results**, future signal lists, the checker and economic news. Full documentation: [DEVELOPER_API.md](DEVELOPER_API.md) or [quantexbot.pro/docs/api](https://quantexbot.pro/docs/api).
+A REST API at `https://api.quantexbot.pro/v1` for your own apps and bots: brokers, pairs, payouts, **OHLC candles**, **historical candles** and **live ticks** (market data). Full documentation: [DEVELOPER_API.md](DEVELOPER_API.md) or [quantexbot.pro/docs/api](https://quantexbot.pro/docs/api).
 
 ### How do I get an API key?
 [Create an account](https://quantexbot.pro/register), verify your email, then open **Dashboard → API keys**. The free Developer plan is included; the key is shown only once.
 
-### Which plan do I need for live signals, webhooks or the stream?
-Live signals, results and future lists start from **Starter**. Webhooks, the live stream and candle history are in **Pro** and **Business**. See [quantexbot.pro/pricing](https://quantexbot.pro/pricing).
+### Which plan do I need for candles, history or live ticks?
+Live candles start with **Candle Basic** ($15, 1 broker) and **Candle Data API** ($30, 2 brokers). **Full Market Data API** ($50) adds all 3 brokers, historical candles and live ticks. See [quantexbot.pro/pricing](https://quantexbot.pro/pricing).
 
-### Are API signals the same as the bot's signals?
-Yes. The API serves the signals the QUANTEX bot really delivers, each setup once, and the WIN / LOSS result later with the same id. The API never runs a separate analysis.
+### Does the API give signals?
+Not at the moment — the API is for market data. QUANTEX signals are delivered in the Telegram bot, on the website and in the app.
+
+### What is Auto Trading?
+The bot trades the signals for you on your own QUOTEX, TRADOWIX or BINOLLA account, with your stake, money management, stop loss and take profit. Your password is never stored. Available for **PLUS** and **INFINITY** → [guide](guide/14-auto-trading.md).
 
 ### How do I pay for an API plan?
 In **Dashboard → Upgrade plan** with Binance Pay, USDT TRC20 or USDT BEP20. Paste the transaction ID; it is verified automatically and the plan starts at once.

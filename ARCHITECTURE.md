@@ -14,7 +14,7 @@ How the QUANTEX Telegram bot, the website and the Developer API work together. W
 | **Market data collectors** | internal | Record every M1 candle and the payout of every pair of QUOTEX, TRADOWIX and BINOLLA, live and archived |
 | **Signal engines** | internal | Strategy Mode (QUANTUM SCAN, SMART FOCUS, HYBRID ENGINE) and Scanning Mode, plus Strategy Intelligence that learns from every result |
 | **Website** | [quantexbot.pro](https://quantexbot.pro) | Information, documentation, accounts, dashboard, billing, AI support, status page |
-| **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | REST API, webhooks and a Server-Sent Events stream for developers |
+| **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | Market data REST API (candles, history, ticks) and a live tick stream for developers |
 | **Engine Bridge** | internal (local only) | The only connection between the web platform and the QUANTEX engine; returns results, never strategy logic |
 | **Admin panel** | private | Users, payments, subscriptions, API keys and logs, content, AI support, system status, analytics |
 
@@ -49,31 +49,23 @@ How the QUANTEX Telegram bot, the website and the Developer API work together. W
 
 ---
 
-## 3. How a live signal reaches the API
+## 3. Auto Trading (in the Telegram bot)
 
 ```
-Signal engine finds a setup
+Signal delivered by the bot (Live Signal / Live Session)   or   the user's own signal list
         │
         ▼
-Telegram bot delivers it to a user (Live Session / Live Signal / Auto Signal / Scanning)
+Auto Trading engine (one connection per user, to the user's own broker account)
+        │   checks: market open, payout filter, limits, max trades at once
+        ▼
+Order reaches the broker as the candle opens  →  martingale / QUANTEX Recovery  →  result
         │
-        ├─► written ONCE to the signal feed      (same broker + pair + timeframe + entry = same signal id)
-        │
-Candle closes → result checked (WIN / MTG WIN / LOSS)
-        │
-        └─► result written to the feed with the same id
-                         │
-                         ▼
-        Engine Bridge reads the feed  →  web platform stores it (about every 1.5 s)
-                         │
-        ┌────────────────┼──────────────────────┬────────────────────┐
-        ▼                ▼                      ▼                    ▼
- GET /v1/signals/live   webhooks           GET /v1/stream/signals   GET /v1/results
- (cursor polling)      (signed POST)        (Server-Sent Events)    (daily win rate)
+        ▼
+Dashboard · Log · History  —  stop loss / take profit reached → auto trading stops and tells the user
 ```
 
-- The API serves the signals the bot **really delivered**; it never starts a new analysis for an API request, so API traffic cannot slow the bot.
-- Each signal carries entry and expiry time (UTC), direction (CALL / PUT), payout, confidence and engine; the result arrives later with the same id: `WIN` (`mtg_level` 0 or 1), `LOSS` or `NO_DATA`.
+- Brokers: QUOTEX, TRADOWIX, BINOLLA. The password is used only to sign in; the broker session is stored encrypted.
+- If the network drops, the engine reconnects with the kept session by itself; the user signs in again only when the broker ends the session.
 
 ---
 
@@ -120,8 +112,8 @@ Keys look like `qx_live_<8-char prefix>_<40-char secret>`. Only the prefix and a
 
 - Only the web platform is reachable from the internet; the database, the Engine Bridge and the bot are internal.
 - Separate sessions and cookies for the website and the admin panel; admin sign-in needs password + authenticator code.
-- API keys and webhook secrets are stored hashed / encrypted and shown only once.
-- Webhooks: HTTPS only, private and local addresses are refused, every POST is signed (`X-Quantex-Signature`).
+- API keys are stored hashed and shown only once.
+- Auto Trading: a broker password is used once to sign in and never stored; only the broker session is kept, encrypted.
 - Payments are never trusted from the user: each transaction is verified against Binance / the blockchain, and a transaction can be used only once (website and bot together).
 - Every admin action is written to an audit log that cannot be edited.
 

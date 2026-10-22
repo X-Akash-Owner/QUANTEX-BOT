@@ -1,0 +1,144 @@
+<!doctype html>
+<!--
+  QUANTEX API - live candle chart for your own website
+
+  The page asks YOUR server (api.php, server.js or server.py in this folder) for data.
+  Your server adds the API key, so the key is never visible in the browser.
+  Chart library: TradingView Lightweight Charts (free, keep its attribution).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live chart</title>
+<script src="https://unpkg.com/lightweight-charts@5.0.9/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  :root { color-scheme: dark; --bg: #0b1020; --panel: #121933; --line: #222b4d; --text: #e6e9f5; --muted: #8a93b5; --up: #22c55e; --down: #ef4444; --accent: #3b82f6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--text); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  select, button { font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .price { margin-left: auto; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+  .price.up { color: var(--up); } .price.down { color: var(--down); }
+  .status { color: var(--muted); font-size: 12px; }
+  #chart { height: calc(100vh - 56px); min-height: 360px; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <select id="pair" aria-label="Pair"></select>
+  <span id="tfs"></span>
+  <span class="status" id="status">loading…</span>
+  <span class="price" id="price">–</span>
+</div>
+<div id="chart"></div>
+
+<script>
+const API = "api.php";                       // the same address works with api.php, server.js and server.py
+const TF_SECONDS = { M1: 60, M5: 300, M15: 900, M30: 1800, H1: 3600, H4: 14400 };
+let pair = new URLSearchParams(location.search).get("pair") || "EURUSD_otc";
+let tf = "M1";
+let bars = [];
+let session = 0;                             // changes when the pair or timeframe changes
+
+const $ = (id) => document.getElementById(id);
+const chart = LightweightCharts.createChart($("chart"), {
+  autoSize: true,
+  localization: { locale: navigator.language && !navigator.language.includes("@") ? navigator.language : "en-US" },
+  layout: { background: { color: "#0b1020" }, textColor: "#8a93b5" },
+  grid: { vertLines: { color: "#161e3b" }, horzLines: { color: "#161e3b" } },
+  timeScale: { timeVisible: true, secondsVisible: false },
+});
+const series = chart.addSeries(LightweightCharts.CandlestickSeries, {
+  upColor: "#22c55e", downColor: "#ef4444", borderVisible: false, wickUpColor: "#22c55e", wickDownColor: "#ef4444",
+});
+
+async function get(query) {
+  const res = await fetch(`${API}?${new URLSearchParams(query)}`);
+  const body = await res.json();
+  if (!body.ok) throw new Error(body.error);
+  return body.data;
+}
+
+/** Candles from the server: [[epoch, open, high, low, close], ...], oldest first. */
+const toBars = (rows) => rows.map(([time, open, high, low, close]) => ({ time, open, high, low, close }));
+
+async function load() {
+  const my = ++session;
+  $("status").textContent = "loading…";
+  bars = toBars(await get({ do: "candles", pair, tf, limit: 500 }));
+  // M5 and higher: the API sends closed candles only, so build the running one from M1 candles.
+  if (tf !== "M1" && bars.length) {
+    const sec = TF_SECONDS[tf];
+    const start = Math.floor(Date.now() / 1000 / sec) * sec;
+    const m1 = toBars(await get({ do: "candles", pair, tf: "M1", limit: sec / 60 })).filter((b) => b.time >= start);
+    if (m1.length) {
+      bars.push({ time: start, open: m1[0].open, close: m1[m1.length - 1].close,
+        high: Math.max(...m1.map((b) => b.high)), low: Math.min(...m1.map((b) => b.low)) });
+    }
+  }
+  if (my !== session) return;
+  // Show as many decimals as the pair has (EUR/USD 5, BTC/USD 2 ...).
+  const dec = Math.min(6, Math.max(2, ...bars.slice(-50).map((b) => (String(b.close).split(".")[1] || "").length)));
+  series.applyOptions({ priceFormat: { type: "price", precision: dec, minMove: 1 / 10 ** dec } });
+  series.setData(bars);
+  chart.timeScale().scrollToRealTime();
+  $("status").textContent = `${pair} · ${tf}`;
+}
+
+/** One live tick: update the last candle, or start a new one when its period begins. */
+function applyTick(t) {
+  const sec = TF_SECONDS[tf];
+  const now = Math.floor(t.epoch_ms / 1000);
+  const bucket = now - (now % sec);
+  let last = bars[bars.length - 1];
+  if (last && bucket < last.time) return;
+  if (!last || bucket > last.time) {
+    const open = t.candle && t.candle.epoch === bucket ? t.candle.open : last ? last.close : t.price;
+    last = { time: bucket, open, high: Math.max(open, t.price), low: Math.min(open, t.price), close: t.price };
+    bars.push(last);
+  } else {
+    last.high = Math.max(last.high, t.price);
+    last.low = Math.min(last.low, t.price);
+    last.close = t.price;
+  }
+  if (tf === "M1" && t.candle && t.candle.epoch === bucket) {   // M1: the broker's own candle is exact
+    Object.assign(last, { open: t.candle.open, high: t.candle.high, low: t.candle.low, close: t.candle.close });
+  }
+  series.update({ ...last });
+  const el = $("price");
+  el.className = "price " + (last.close >= last.open ? "up" : "down");
+  el.textContent = t.price;
+}
+
+async function poll() {
+  const my = session;
+  try {
+    const t = await get({ do: "tick", pair });
+    if (my === session && t.available) applyTick(t);
+  } catch (e) {
+    $("status").textContent = "reconnecting…";
+  }
+  setTimeout(poll, 500);                     // two updates a second; your server shares them between all visitors
+}
+
+async function start() {
+  const pairs = await get({ do: "pairs" });
+  $("pair").innerHTML = pairs.map((p) => `<option value="${p.symbol}">${p.name} · ${p.payout}%</option>`).join("");
+  if (!pairs.some((p) => p.symbol === pair) && pairs.length) pair = pairs[0].symbol;
+  $("pair").value = pair;
+  $("pair").onchange = () => { pair = $("pair").value; load(); };
+
+  $("tfs").innerHTML = Object.keys(TF_SECONDS).map((x) => `<button type="button" data-tf="${x}">${x}</button>`).join(" ");
+  const mark = () => document.querySelectorAll("[data-tf]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tf === tf)));
+  $("tfs").onclick = (e) => { if (e.target.dataset.tf) { tf = e.target.dataset.tf; mark(); load(); } };
+  mark();
+
+  await load();
+  poll();
+}
+start().catch((e) => { $("status").textContent = "Error: " + e.message; });
+</script>
+</body>
+</html>

@@ -23,6 +23,7 @@ This guide explains **every menu, every step and every button** in QUANTEX-BOT: 
 | 11 | [Account, Payments & Extras](guide/11-account.md) | Profile, Referral, Upgrade & Auto Payment, Reviews, About, Others, Web Control, HUB, Help |
 | 12 | [Free Bots](guide/12-free-bots.md) | The 10 free bots: which are open, which are locked |
 | 13 | [Q-BOT STUDIO](guide/13-qbot-studio.md) 🟢 *released 18 Oct 2026* | A → Z: packages & pricing, the 9 steps and every button, deploy, My Bots, Customize, Studio Control, strategies, your bot's Admin Panel |
+| 14 | [Auto Trading](guide/14-auto-trading.md) 🟢 *released 22 Oct 2026* | Connect your broker, dashboard, signal lists, money management, stop loss / take profit, safety margin, payout filter, limits, log & history |
 
 ---
 
