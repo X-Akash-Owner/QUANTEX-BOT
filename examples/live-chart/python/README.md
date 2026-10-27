@@ -1,0 +1,11 @@
+# Live candle chart on your website — Python
+
+A page with a moving candle chart (M1 to H4) and a pair list, fed by candles and live ticks. A small server file adds your key, so visitors never see it, and shares one answer between all visitors.
+
+Endpoint groups: Brokers & pairs, Candles (OHLC), Live ticks. Result: A live chart that moves with every tick, like the broker’s. Choose the pair and the timeframe at the top.
+
+**How to run:** install: `pip install flask requests` · set `QX_API_KEY` · run: `python server.py`
+
+Files: [`index.html`](index.html), [`server.py`](server.py)
+
+Full documentation: [../../../DEVELOPER_API.md](../../../api/README.md)
