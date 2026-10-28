@@ -1,6 +1,6 @@
 # QUANTEX
 
-> QUANTEX is a binary options signal system: a Telegram bot (@QuantexBinaryTools_bot) with signal engines for QUOTEX, TRADOWIX and BINOLLA (OTC and Live markets), a website (https://quantexbot.pro) with accounts, documentation, billing and status, Auto Trading in the bot (it trades the signals on the user's own QUOTEX, TRADOWIX or BINOLLA account with stop loss, take profit and money management), and a Developer API (https://api.quantexbot.pro/v1) for market data: brokers, pairs, payouts, OHLC candles, historical candles and live ticks. JSON over HTTPS, key in "Authorization: Bearer qx_live_…". All documentation is public.
+> QUANTEX is a binary options signal system: a Telegram bot (@QuantexBinaryTools_bot) with signal engines for QUOTEX, TRADOWIX and BINOLLA (OTC and Live markets), a website (https://quantexbot.pro) with accounts, documentation, billing and status, Auto Trading in the bot (it trades the signals on the user's own QUOTEX, TRADOWIX or BINOLLA account with stop loss, take profit and money management), and a Developer API (https://api.quantexbot.pro/v1) with market data (brokers, pairs, payouts, OHLC candles, historical candles, live ticks) and signals (the live signals the bot delivers with their results, future signal lists, a signal checker, the economic news calendar, webhooks and an SSE signal stream). JSON over HTTPS, key in "Authorization: Bearer qx_live_…". All documentation is public.
 
 ## Start here
 
@@ -14,7 +14,7 @@
 - [DEVELOPER_API.md](api/README.md): complete Developer API documentation — guide, every endpoint with parameters and example answers, error codes, plans
 - [api/openapi.json](api/openapi.json): OpenAPI 3.1 description of the API
 - [WEBSITE.md](docs/website.md): the website quantexbot.pro — pages, accounts, dashboard, API keys, billing, AI support, status
-- [examples/](examples/README.md): Python, Node.js, PHP and cURL examples (live candle chart, historical candles to CSV)
+- [examples/](examples/README.md): Python, Node.js, PHP and cURL examples (Telegram signal bot, live candle chart, result checker, historical candles to CSV, webhook receiver)
 
 ## Live documentation (always current)
 
@@ -35,6 +35,14 @@
 - `GET /v1/history` — historical candles of a range of UTC days
 - `GET /v1/ticks` — latest tick of up to 20 pairs (QUOTEX, TRADOWIX, BINOLLA)
 - `GET /v1/stream/ticks` — Server-Sent Events stream of live ticks
+- `POST /v1/checker` — check a signal list: WIN / LOSS / NO_DATA with martingale steps
+- `GET /v1/news` — upcoming economic events with the expected direction and the pairs to trade
+- `GET /v1/signals/live` — live signals the bot delivers and their results (cursor polling)
+- `GET /v1/signals/{id}` — one signal with its result
+- `GET /v1/results` — settled signals of a UTC day with the win rate
+- `POST /v1/future` + `GET /v1/jobs/{id}` — future signal list job
+- `GET /v1/stream/signals` — Server-Sent Events stream of new signals and results
+- Webhooks (Dashboard → API → Webhooks): signed POST of every new signal and result
 - `GET /v1/openapi.json` — OpenAPI 3.1 (no key)
 
 ## Telegram bot

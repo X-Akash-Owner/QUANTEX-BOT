@@ -40,6 +40,9 @@ All notable QUANTEX releases, newest first. Dates are in 2026 (UTC+6).
 
 ### 🔌 Developer API
 - **BINOLLA live ticks** on `GET /v1/ticks` and `GET /v1/stream/ticks`.
+- The **Signal API** is back next to the Market Data API: live signals and results, future signal lists, the signal checker, economic news, webhooks and the signal stream.
+- **Starter**, **Pro** and **Business** plans are on sale again; the **Developer** plan stays free.
+- New code examples: Telegram signal bot, result checker and webhook receiver (Python, Node.js, PHP).
 - Pair names with a dot (BINOLLA stocks such as `0700.HK_otc`, `BMW.DE_otc`) are accepted everywhere.
 
 ---

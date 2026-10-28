@@ -16,7 +16,7 @@ How the QUANTEX Telegram bot, the website and the Developer API work together. W
 | **Market data collectors** | internal | Record every M1 candle and the payout of every pair of QUOTEX, TRADOWIX and BINOLLA, live and archived |
 | **Signal engines** | internal | Strategy Mode (seven analyzers, from QUANTUM SCAN to HYBRID ENGINE V3 and WT POWER) and Scanning Mode |
 | **Website** | [quantexbot.pro](https://quantexbot.pro) | Information, documentation, accounts, dashboard, billing, AI support, status page |
-| **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | Market data REST API (candles, history, ticks) and a live tick stream for developers |
+| **Developer API** | [api.quantexbot.pro/v1](https://api.quantexbot.pro/v1/status) | REST API for developers: market data (candles, history, ticks) and the signal API (live signals and results, future lists, checker, news), with webhooks and SSE streams |
 | **Engine Bridge** | internal (local only) | The only connection between the web platform and the QUANTEX engine; returns results, never strategy logic |
 | **Admin panel** | private | Users, payments, subscriptions, API keys and logs, content, AI support, system status, analytics |
 

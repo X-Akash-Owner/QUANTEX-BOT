@@ -8,4 +8,4 @@ Endpoint groups: Historical candles. Result: A file like EURUSD_otc_M1_2026-09-0
 
 Files: [`export.js`](export.js)
 
-Full documentation: [../../../DEVELOPER_API.md](../../../api/README.md)
+Full documentation: [api/README.md](../../../api/README.md)

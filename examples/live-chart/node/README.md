@@ -8,4 +8,4 @@ Endpoint groups: Brokers & pairs, Candles (OHLC), Live ticks. Result: A live cha
 
 Files: [`index.html`](index.html), [`server.js`](server.js)
 
-Full documentation: [../../../DEVELOPER_API.md](../../../api/README.md)
+Full documentation: [api/README.md](../../../api/README.md)

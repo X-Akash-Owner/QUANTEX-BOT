@@ -39,14 +39,14 @@
 | 🤖 | **[Auto Trading](docs/guide/14-auto-trading.md)** | Trades the signals on **your own broker account**, with money-management plans, stop loss and take profit |
 | 🧩 | **[Q-BOT STUDIO](docs/studio.md)** | Build and deploy **your own branded signal bot** in 9 guided steps, with no coding |
 | 🌐 | **[Website](docs/website.md)** | Accounts, Live Signal and Future Signal on the web, Live Chart, billing, AI support and status, in 3 languages |
-| 🔌 | **[Developer API](api/README.md)** | Brokers, pairs, payouts, OHLC candles, historical candles and **live ticks** for your own apps |
+| 🔌 | **[Developer API](api/README.md)** | **Market data** (candles, history, live ticks) and the **Signal API** (live signals with results, future lists, checker, news, webhooks) for your own apps |
 
 > [!NOTE]
 > **New in v5.4:**
 > - **Auto Trading:** money-management plans and the **QX Auto TF** strategy.
 > - **Studio:** **AXTIRON FS** in Q-BOT STUDIO PRO / ELITE.
 > - **Website:** Telegram bot packages can be bought on the website again.
-> - **API:** **BINOLLA live ticks** in the Developer API.
+> - **API:** **BINOLLA live ticks**, and the **Signal API** is back: live signals and results, future lists, checker, news, webhooks and the signal stream.
 >
 > See the [changelog](CHANGELOG.md).
 
@@ -182,7 +182,8 @@ Set a **Primary Broker** once and every feature uses it. → [Full market list](
 | Website & API | Price |
 |---|---|
 | **Website Signal package**: unlimited Live and Future signals on the website and app | $25 / 30 days |
-| **Developer API**: Developer (free) · Candle Basic · Candle Data API · Full Market Data API | Free · $15 · $30 · $50 / month |
+| **Signal API**: Developer (free) · Starter · Pro · Business | Free · $29 · $79 · $199 / month |
+| **Market Data API**: Candle Basic · Candle Data API · Full Market Data API | $15 · $30 · $50 / month |
 
 You can pay with **Binance Pay** or **USDT (TRC20 / BEP20)**. Payments are verified automatically and activate at once. → [Pricing details](docs/pricing.md) · [quantexbot.pro/pricing](https://quantexbot.pro/pricing)
 
@@ -201,7 +202,7 @@ You can pay with **Binance Pay** or **USDT (TRC20 / BEP20)**. Payments are verif
 
 ## Developer API
 
-Market data from the QUANTEX feed, as JSON over HTTPS with a Server-Sent Events stream for live ticks.
+Market data and the QUANTEX signals, as JSON over HTTPS, with webhooks and Server-Sent Events streams for live ticks and live signals.
 
 ```bash
 # Create a free account at https://quantexbot.pro/register, then a key in Dashboard → API keys
@@ -215,6 +216,9 @@ curl "https://api.quantexbot.pro/v1/candles?broker=quotex&pair=EURUSD_otc&tf=M1&
 
 # Live ticks: QUOTEX, TRADOWIX and BINOLLA (Full Market Data API)
 curl -N "https://api.quantexbot.pro/v1/stream/ticks?broker=binolla&pairs=EURUSD_otc,0700.HK_otc" -H "Authorization: Bearer $KEY"
+
+# Live signals and their results (Starter and higher; poll with since=<next_cursor>)
+curl "https://api.quantexbot.pro/v1/signals/live?broker=quotex" -H "Authorization: Bearer $KEY"
 ```
 
 [API reference](api/README.md) · [OpenAPI 3.1](api/openapi.json) · [Code examples](examples/README.md) · [llms.txt](llms.txt)

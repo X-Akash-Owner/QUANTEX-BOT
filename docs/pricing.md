@@ -168,11 +168,14 @@ Special promo codes are occasionally released for:
 
 ## 🔌 Developer API Plans *(website)*
 
-The **Developer API** ([DEVELOPER_API.md](../api/README.md)) has its own plans, bought on the website in **[Dashboard → Upgrade plan](https://quantexbot.pro/dashboard/billing/upgrade)**. They are separate from the Bot Access packages above.
+The **Developer API** ([DEVELOPER_API.md](../api/README.md)) has its own plans, bought on the website in **[Dashboard → Upgrade plan](https://quantexbot.pro/dashboard/billing/upgrade)**. They are separate from the Bot Access packages above. **Developer → Business** are the **Signal API** plans (signals, results, checker, future lists, news, webhooks); **Candle Basic → Full Market Data API** are the **Market Data API** plans (candles, history, ticks).
 
 | Plan | Price (USDT / 30 days) | Brokers | Requests | API keys | Includes |
 |---|---|---|---|---|---|
-| **Developer** | Free | all 3 | 10 / min · 3,000 / month | 1 | status, account, brokers, pairs, payouts |
+| **Developer** | Free | all 3 | 10 / min · 3,000 / month | 1 | status, account, brokers, pairs, payouts, economic news |
+| **Starter** | 29 | all 3 | 60 / min · 100,000 / month | 2 | + signal checker, **live signals and results**, future signal lists |
+| **Pro** ⭐ | 79 | all 3 | 300 / min · 1,000,000 / month | 5 | + candles (30 days), **3 webhooks**, signal stream (SSE) |
+| **Business** | 199 | all 3 | 1,000 / min · 5,000,000 / month | 20 | + candles (365 days), **10 webhooks** |
 | **Candle Basic** | 15 | 1 of your choice | unlimited | 2 | + live **candles** M1–H4 (up to 2,000 per request) |
 | **Candle Data API** | 30 | 2 of your choice | unlimited | 3 | + live **candles** M1–H4 (up to 2,000 per request) |
 | **Full Market Data API** | 50 | all 3 | unlimited | 5 | + **historical candles** and **live ticks** (REST + stream) |

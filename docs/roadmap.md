@@ -337,6 +337,8 @@
 
 ## ✅ v5.4 — Auto Trading plans + BINOLLA ticks *(28 October 2026)*
 
+- [x] **Signal API back** in the Developer API: live signals and results, future lists, checker, news, webhooks, signal stream (Starter / Pro / Business on sale again)
+
 - [x] **Signal Config**: the bot runs the signals for auto trading
 - [x] **QX Auto TF** strategy (best market + timeframe M1–M5, M4 included)
 - [x] **Normal plan**, **Masaniello sheet**, **Smart Money Management**

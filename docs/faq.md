@@ -379,7 +379,7 @@ Binary options trading carries high risk. QUANTEX-BOT provides signals to assist
 Yes: **[quantexbot.pro](https://quantexbot.pro)** (also in [বাংলা](https://quantexbot.pro/bn) and [Português](https://quantexbot.pro/pt)). It has the documentation, pricing, updates, FAQ, a contact form, the live [system status](https://quantexbot.pro/status) and your account dashboard. Signals and trading tools stay in the Telegram bot. Details: [WEBSITE.md](website.md).
 
 ### What is the Developer API?
-A REST API at `https://api.quantexbot.pro/v1` for your own apps and bots: brokers, pairs, payouts, **OHLC candles**, **historical candles** and **live ticks** (market data). Full documentation: [DEVELOPER_API.md](../api/README.md) or [quantexbot.pro/docs/api](https://quantexbot.pro/docs/api).
+A REST API at `https://api.quantexbot.pro/v1` for your own apps and bots: brokers, pairs, payouts, **OHLC candles**, **historical candles** and **live ticks** (Market Data API), plus **live signals with results**, **future signal lists**, the **signal checker**, **economic news**, **webhooks** and a **signal stream** (Signal API). Full documentation: [DEVELOPER_API.md](../api/README.md) or [quantexbot.pro/docs/api](https://quantexbot.pro/docs/api).
 
 ### How do I get an API key?
 [Create an account](https://quantexbot.pro/register), verify your email, then open **Dashboard → API keys**. The free Developer plan is included; the key is shown only once.
@@ -388,7 +388,7 @@ A REST API at `https://api.quantexbot.pro/v1` for your own apps and bots: broker
 Live candles start with **Candle Basic** ($15, 1 broker) and **Candle Data API** ($30, 2 brokers). **Full Market Data API** ($50) adds all 3 brokers, historical candles and live ticks. See [quantexbot.pro/pricing](https://quantexbot.pro/pricing).
 
 ### Does the API give signals?
-Not at the moment — the API is for market data. QUANTEX signals are delivered in the Telegram bot, on the website and in the app.
+Yes. `GET /v1/signals/live` gives every signal the bot delivers, once, with its result (WIN / LOSS, martingale step) under the same id; `GET /v1/results` gives a day's results and win rate. **Starter** ($29) opens live signals, results, the checker and future lists; **Pro** ($79) and **Business** ($199) add webhooks and the SSE signal stream. See [quantexbot.pro/pricing](https://quantexbot.pro/pricing).
 
 ### What is Auto Trading?
 The bot trades the signals for you on your own QUOTEX, TRADOWIX or BINOLLA account, with your stake, money management, stop loss and take profit. Your password is never stored. Available for **PLUS** and **INFINITY** → [guide](guide/14-auto-trading.md).

@@ -40,7 +40,7 @@ The **Telegram bot** ([@QuantexBinaryTools_bot](https://t.me/QuantexBinaryTools_
 | **Information** | Features, supported brokers and markets, how Live Session / Future Signal / the checkers work, pricing, FAQ, rules, updates |
 | **Documentation** | The complete user guide and the Developer API documentation |
 | **Account** | Sign up with email or Google, two-step verification, sessions, notifications, profile photo |
-| **Developer API** | API keys, usage, request logs, plan limits (market data: candles, history, ticks) |
+| **Developer API** | API keys, usage, request logs, webhooks, plan limits (market data and signals) |
 | **Billing** | Buy and renew Developer API plans with Binance Pay or USDT (TRC20 / BEP20), receipts |
 | **Support** | QUANTEX AI assistant (24/7), contact form, Telegram support |
 | **Status** | Live health of the website, API, data feeds, Telegram bot and payments |
@@ -121,12 +121,13 @@ Full documentation: **[DEVELOPER_API.md](../api/README.md)** (also at [quantexbo
 | **API usage** | Requests per day and per endpoint, monthly quota |
 | **API logs** | Every request of the last 90 days (time, endpoint, status, latency, request ID) — request bodies and keys are never stored |
 | **My APIs** | Which endpoint groups your plan includes, and from which plan the others are available |
+| **Webhooks** | Add an https address; every new signal and result is POSTed, signed with `X-Quantex-Signature`; retries after 1, 5 and 30 minutes; **Send test** (Pro and Business) |
 
 ---
 
 ## 💳 Buying an API plan
 
-1. **Dashboard → Upgrade plan** → choose Candle Basic, Candle Data API or Full Market Data API (and your broker(s) for the first two).
+1. **Dashboard → Upgrade plan** → choose a Signal API plan (Starter, Pro, Business) or a Market Data API plan (Candle Basic, Candle Data API, Full Market Data API; choose your broker(s) for the first two).
 2. Choose **Binance Pay**, **USDT TRC20** or **USDT BEP20**. The order shows the exact amount (with a small unique fraction), the Pay ID or wallet address and a QR code; it is valid for 60 minutes.
 3. Pay, then paste the **transaction ID**.
 4. The payment is **verified automatically** against Binance / the blockchain (receiver, currency, exact amount, time, confirmations; a transaction can be used only once). The plan starts at once, limits apply immediately and a receipt is emailed.
